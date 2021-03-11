@@ -1,4 +1,7 @@
 #pragma once
+#include "Coulomb.hpp"
+#include "Wavefunction/DiracSpinor.hpp"
+#include "YkTable.hpp"
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -30,20 +33,67 @@ class QkTable {
   using IndexSet = std::array<Index, 4>;
 
 private:
-  std::map<IndexSet, std::vector<Real>> m_data;
+  std::map<IndexSet, std::vector<Real>> m_data{};
 
 public:
-  QkTable();
+  QkTable() {}
 
-  std::pair<IndexSet, std::vector<Real>> *get(IndexSet abcd) {
-    auto it = m_data.find(NormalOrder_Rk(abcd));
-    if (it != m_data.end())
-      return &*it;
+  // Gives arrow access to all map functions
+  auto operator-> () { return &m_data; }
+
+  //! Fill all non-zero Qk integrals (nb: often don't need all)
+  void fill(const YkTable &yk);
+  //! Update all non-zero Qk integrals (nb: often don't need all)
+  void update(const YkTable &yk);
+
+  //! Add a specific new Q (for each k) to map. If exists, does nothing
+  void addQ(const DiracSpinor &a, const DiracSpinor &b, const DiracSpinor &c,
+            const DiracSpinor &d, const YkTable &yk);
+  //! Updates a specific new Q (for each k) in map. If abscent, does nothing!
+  void updateQ(const DiracSpinor &a, const DiracSpinor &b, const DiracSpinor &c,
+               const DiracSpinor &d, const YkTable &yk);
+
+  // These assume zero of not found
+
+  //! Return stored Qk (each k). If abscent, empty
+  const std::vector<Real> &Qk(const DiracSpinor &a, const DiracSpinor &b,
+                              const DiracSpinor &c, const DiracSpinor &d);
+  //! Returns specific Q^k_abcd. If abscent, zero
+  Real Q(int k, const DiracSpinor &a, const DiracSpinor &b,
+         const DiracSpinor &c, const DiracSpinor &d);
+  //! Uses stored Q's to return R. Zero if abscent
+  Real R(int k, const DiracSpinor &a, const DiracSpinor &b,
+         const DiracSpinor &c, const DiracSpinor &d);
+  //! Uses stored Q's to return P. Zero if abscent
+  Real P(int k, const DiracSpinor &a, const DiracSpinor &b,
+         const DiracSpinor &c, const DiracSpinor &d);
+  //! Uses stored Q's to return W. Zero if abscent
+  Real W(int k, const DiracSpinor &a, const DiracSpinor &b,
+         const DiracSpinor &c, const DiracSpinor &d);
+
+  // Functions to construct each Q? Use Coulomb..
+  // Qk(a,b,c,d);
+  // Q(k,a,b,c,d);
+  // R(k,a,b,c,d);
+  // W(k,a,b,c,d);
+  // P(k,a,b,c,d);
+
+public:
+  IndexSet NormalOrder(const DiracSpinor &a, const DiracSpinor &b,
+                       const DiracSpinor &c, const DiracSpinor &d) {
+    return NormalOrder(a.nk_index(), b.nk_index(), c.nk_index(), d.nk_index());
   }
 
-private:
+  IndexSet NormalOrder(int a, int b, int c, int d) {
+    return NormalOrder(Index(a), Index(b), Index(c), Index(d));
+  }
+
   IndexSet NormalOrder(const IndexSet &abcd) {
     const auto [a, b, c, d] = abcd;
+    return NormalOrder(a, b, c, d);
+  }
+
+  IndexSet NormalOrder(Index a, Index b, Index c, Index d) {
     if constexpr (symmetry == Symmetry::Rk) {
       return NormalOrder_Rk(a, b, c, d);
     } else if constexpr (symmetry == Symmetry::Wk) {
@@ -55,6 +105,7 @@ private:
     }
   }
 
+private:
   IndexSet NormalOrder_Rk(Index a, Index b, Index c, Index d) {
     // put smallest first
     const auto min = std::min({a, b, c, d});
