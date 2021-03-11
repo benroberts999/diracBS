@@ -67,6 +67,20 @@ constexpr int kappaFromIndex(int i) {
 constexpr int twojFromIndex(int i) { return (i % 2 == 0) ? i + 1 : i; }
 constexpr int lFromIndex(int i) { return (i % 2 == 0) ? i / 2 : (i + 1) / 2; }
 
+constexpr int states_below_n(int n) { return n * n - 2 * n + 1; }
+
+constexpr int nk_to_index(int n, int k) {
+  return states_below_n(n) + indexFromKappa(k);
+}
+
+constexpr std::pair<int, int> index_to_nk(int index) {
+  // Better way? isqrt?
+  const auto n = 1 + int(std::sqrt(index + 0.01));
+  // int n = 1 + int_sqrt(index);
+  const auto kappa_index = index - states_below_n(n);
+  return {n, kappa_index};
+}
+
 //******************************************************************************
 
 //! @brief Minimum/Maximum 'l' allowed in {a,b,k \ c,d,l} 6j symbol

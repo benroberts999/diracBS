@@ -74,6 +74,7 @@ private:
   const int m_l;
   const int m_parity;
   const int m_k_index;
+  const int m_nk_index;
 
 public:
   //! Orbital angular momentum Q number
@@ -87,6 +88,8 @@ public:
   int parity() const { return m_parity; }
   //! kappa index (see Angular)
   int k_index() const { return m_k_index; }
+  //! (n,kappa) index (see Angular)
+  int nk_index() const { return m_nk_index; }
 
   //! Single-electron term symbol (e.g., 6s_1/2). Gnuplot=true => 6s_{1/2}
   std::string symbol(bool gnuplot = false) const;
