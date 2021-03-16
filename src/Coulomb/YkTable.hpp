@@ -56,6 +56,8 @@ public:
   //! Re-calculates y^k integrals involving single orbital Fn
   void update_y_ints(const DiracSpinor &Fn);
 
+  bool a_is_b() const { return m_aisb; }
+
   const std::vector<DiracSpinor> &get_a() const { return *m_a_orbs; }
   const std::vector<DiracSpinor> &get_b() const { return *m_b_orbs; }
 
