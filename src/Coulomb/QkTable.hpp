@@ -43,6 +43,11 @@ public:
   //! Gives arrow access to all map functions
   auto operator-> () { return &m_data; }
 
+  auto begin() { return m_data.begin(); }
+  auto cbegin() const { return m_data.cbegin(); }
+  auto end() { return m_data.end(); }
+  auto cend() const { return m_data.cend(); }
+
   //! Fill all non-zero Qk integrals (nb: often don't need all)
   void fill(const YkTable &yk) {
     assert(yk.a_is_b());
@@ -58,6 +63,16 @@ public:
         }
       }
     }
+  }
+
+  void count() const {
+    std::size_t num = 0;
+    for (const auto &[key, value] : m_data) {
+      num += value.size();
+      if (value.size() == 0)
+        std::cout << "**\n";
+    }
+    std::cout << "Qk table contains: " << num << " non-zero elements\n";
   }
 
   //! Update all non-zero Qk integrals (nb: often don't need all)
@@ -81,20 +96,21 @@ public:
   void addQ(const DiracSpinor &a, const DiracSpinor &b, const DiracSpinor &c,
             const DiracSpinor &d, const YkTable &yk) {
     const auto [kmin, kmax] = Coulomb::k_minmax_Q(a, b, c, d);
-    if (kmax > kmin)
+    if (kmin > kmax)
       return;
     const auto [it, new_element] =
         m_data.insert({NormalOrder(a, b, c, d), std::vector<Real>{}});
     // If already exists, do nothing
     if (!new_element)
       return;
-    assert(it->empty());
+    auto &[key, value] = *it;
+    assert(value.empty());
     const auto num_ks = std::size_t((kmax - kmin) / 2 + 1);
-    it->reserve(num_ks);
+    value.reserve(num_ks);
     for (int k = kmin; k <= kmax; k += 2) {
       const auto yk_bd = yk.ptr_yk_ab(k, b, d);
       assert(yk_bd != nullptr);
-      it->push_back(Qk_abcd(a, b, c, d, k, *yk_bd, yk.Ck()));
+      value.push_back(Real(Qk_abcd(a, b, c, d, k, *yk_bd, yk.Ck())));
     }
   }
 
@@ -104,23 +120,26 @@ public:
     const auto map_it = m_data.find(NormalOrder(a, b, c, d));
     if (map_it == m_data.end())
       return;
+    auto &[key, value] = *map_it;
     const auto [kmin, kmax] = Coulomb::k_minmax_Q(a, b, c, d);
-    auto vec_it = map_it->begin();
+    auto vec_it = value.begin();
     for (int k = kmin; k <= kmax; k += 2) {
-      assert(vec_it != map_it->end());
+      assert(vec_it != value.end());
       const auto yk_bd = yk.ptr_yk_ab(k, b, d);
       assert(yk_bd != nullptr);
-      *vec_it = Qk_abcd(a, b, c, d, k, *yk_bd, yk.Ck());
+      *vec_it = Real(Qk_abcd(a, b, c, d, k, *yk_bd, yk.Ck()));
       vec_it++;
     }
   }
 
   //! Return pointer stored Qk (each k). If absent, nullptr
   const std::vector<Real> *Qk(const DiracSpinor &a, const DiracSpinor &b,
-                              const DiracSpinor &c,
-                              const DiracSpinor &d) const {
+                              const DiracSpinor &c, const DiracSpinor &d) {
     const auto it = m_data.find(NormalOrder(a, b, c, d));
-    return (it == m_data.end()) ? nullptr : &*it;
+    if ((it == m_data.cend()))
+      return nullptr;
+    const auto &[key, value] = *it;
+    return &value;
   }
 
   //! Returns specific Q^k_abcd. If absent, zero
