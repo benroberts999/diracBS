@@ -14,6 +14,9 @@ var searchData=
   ['reduced_5frhs',['reduced_rhs',['../classDiracOperator_1_1TensorOperator.html#aed235d4345b09d907a61b03468f08ba1',1,'DiracOperator::TensorOperator']]],
   ['regularatinfinity',['regularAtInfinity',['../namespaceDiracODE.html#ad36894c9f997c0dec5b3504621ec4b20',1,'DiracODE']]],
   ['regularatorigin',['regularAtOrigin',['../namespaceDiracODE.html#af171db02afbcfaa75f3ff4b39e30de95',1,'DiracODE']]],
+  ['removeblockcomments',['removeBlockComments',['../namespaceIO.html#a3c5ccc8be8075920b65a6e9d392cf6fb',1,'IO']]],
+  ['removecomments',['removeComments',['../namespaceIO.html#a99893271836fc56247b72538c09643db',1,'IO']]],
+  ['removespaces',['removeSpaces',['../namespaceIO.html#a1e5f0c7eb4a5422241d168b39a7641f0',1,'IO']]],
   ['rho',['rho',['../classDiracSpinor.html#a2ad4d63521429c0e7ac212cc58d10c75',1,'DiracSpinor']]],
   ['rinf',['rinf',['../classDiracSpinor.html#af8e3ecdcecc90cfc8298ff83a2d3dbf0',1,'DiracSpinor']]],
   ['rk_5fabcd',['Rk_abcd',['../namespaceCoulomb.html#a3817e6236c4586453d2816393ad098a7',1,'Coulomb::Rk_abcd(const DiracSpinor &amp;Fa, const DiracSpinor &amp;Fb, const DiracSpinor &amp;Fc, const DiracSpinor &amp;Fd, const int k)'],['../namespaceCoulomb.html#a2530f59c6216146e747d9cbce23df99f',1,'Coulomb::Rk_abcd(const DiracSpinor &amp;Fa, const DiracSpinor &amp;Fc, const std::vector&lt; double &gt; &amp;ykbd)']]],
@@ -22,7 +25,7 @@ var searchData=
   ['rme_5fsymbol',['rme_symbol',['../classDiracOperator_1_1TensorOperator.html#a961d4ecdbadfc5c565f6b2cd056ea53f',1,'DiracOperator::TensorOperator']]],
   ['rpow',['rpow',['../classGrid.html#ac960bbd525c81205c3e41d52c803defe',1,'Grid']]],
   ['rrms_5fformula_5fc_5ft',['rrms_formula_c_t',['../namespaceNuclear.html#a397ebf3afd30e0a355c2dc20de8aaeff',1,'Nuclear']]],
-  ['runmodule',['runModule',['../namespaceModule.html#a775fc6987fbf5fbb86ba8b5788ae0c2a',1,'Module']]],
-  ['runmodules',['runModules',['../namespaceModule.html#afd1104eaeffca1993b1197e3fd5f6d41',1,'Module']]],
+  ['runmodule',['runModule',['../namespaceModule.html#aaba5175a3d6fa6a95d12545ae420442c',1,'Module']]],
+  ['runmodules',['runModules',['../namespaceModule.html#a727f82801c7ef0385f23948e9efd7089',1,'Module']]],
   ['rw_5fbinary',['rw_binary',['../namespaceIO_1_1FRW.html#aa2bf695482756f54691e558954a604ef',1,'IO::FRW::rw_binary(std::fstream &amp;stream, RoW row, std::vector&lt; T &gt; &amp;value, Types &amp;... values)'],['../namespaceIO_1_1FRW.html#a236b924d992075c0619de79a18d76511',1,'IO::FRW::rw_binary(std::fstream &amp;stream, RoW row, T &amp;value, Types &amp;... values)']]]
 ];

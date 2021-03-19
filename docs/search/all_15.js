@@ -5,7 +5,7 @@ var searchData=
   ['vdir',['vdir',['../classWavefunction.html#a8ea877d1c943977e5ca769dc48281029',1,'Wavefunction']]],
   ['vector',['Vector',['../classLinAlg_1_1Vector.html',1,'LinAlg']]],
   ['vertex_5ffunc',['vertex_func',['../classDiracOperator_1_1VertexQED.html#a6b5a15325c0aa7d69bc4ca63438b9001',1,'DiracOperator::VertexQED']]],
-  ['vertexqed',['VertexQED',['../classDiracOperator_1_1VertexQED.html',1,'DiracOperator::VertexQED'],['../namespaceModule.html#aadf0318e360ce31a2bddc48da478cc2c',1,'Module::vertexQED()']]],
+  ['vertexqed',['VertexQED',['../classDiracOperator_1_1VertexQED.html',1,'DiracOperator']]],
   ['vex_5fapprox',['vex_approx',['../namespaceHF.html#ac1db3db0a43960380fd0fe2096b8c7ec',1,'HF']]],
   ['vexfa',['vexFa',['../namespaceHF.html#aca9706ff70b262673500f51577a48bd5',1,'HF']]],
   ['vnuc',['vnuc',['../classWavefunction.html#ab067a5f8d2001474d609215d74732d9c',1,'Wavefunction']]],

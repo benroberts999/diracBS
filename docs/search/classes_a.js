@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['radialf',['RadialF',['../classDiracOperator_1_1RadialF.html',1,'DiracOperator']]],
-  ['radialhamiltonian',['RadialHamiltonian',['../classRadialHamiltonian.html',1,'']]]
+  ['parameters',['Parameters',['../structNuclear_1_1Parameters.html',1,'Nuclear']]],
+  ['pncnsi',['PNCnsi',['../classDiracOperator_1_1PNCnsi.html',1,'DiracOperator']]]
 ];

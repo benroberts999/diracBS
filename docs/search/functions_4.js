@@ -8,7 +8,7 @@ var searchData=
   ['enk',['enk',['../namespaceDiracHydrogen.html#a112a8461364ced15b9078d34e5f16cf6',1,'DiracHydrogen::enk(PrincipalQN n, DiracQN k, Zeff z, AlphaFS a)'],['../namespaceDiracHydrogen.html#a6d4bdc311de5ab89c9e6facf1a052312',1,'DiracHydrogen::Enk(PrincipalQN n, DiracQN k, Zeff z, AlphaFS a)']]],
   ['evenq',['evenQ',['../namespaceAngular.html#afa5e64760aa83eb1d28b95ddc485b954',1,'Angular']]],
   ['evenq_5f2',['evenQ_2',['../namespaceAngular.html#a9bf9ec1166b7a442dbc3b4bcfa29a5ba',1,'Angular']]],
-  ['examplemodule',['exampleModule',['../namespaceModule.html#a996b0667dc7a8d42a1d0497ceb4c0177',1,'Module']]],
+  ['examplemodule',['exampleModule',['../namespaceModule.html#ae7e53df9fec844297f4e7ed4a551d635',1,'Module']]],
   ['excludeexchangeq',['excludeExchangeQ',['../classHF_1_1HartreeFock.html#addf451a38799ca599b7620c75d850a97',1,'HF::HartreeFock']]],
   ['expand_5fbasis_5forbitals',['expand_basis_orbitals',['../namespaceSplineBasis.html#af40170b0ddee9c462d83421f9b199ea7',1,'SplineBasis']]]
 ];

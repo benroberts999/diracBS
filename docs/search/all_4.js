@@ -13,7 +13,7 @@ var searchData=
   ['eps',['eps',['../classDiracSpinor.html#aae3b17f4f08a49a7c30aaaae78393a17',1,'DiracSpinor']]],
   ['evenq',['evenQ',['../namespaceAngular.html#afa5e64760aa83eb1d28b95ddc485b954',1,'Angular']]],
   ['evenq_5f2',['evenQ_2',['../namespaceAngular.html#a9bf9ec1166b7a442dbc3b4bcfa29a5ba',1,'Angular']]],
-  ['examplemodule',['exampleModule',['../namespaceModule.html#a996b0667dc7a8d42a1d0497ceb4c0177',1,'Module']]],
+  ['examplemodule',['exampleModule',['../namespaceModule.html#ae7e53df9fec844297f4e7ed4a551d635',1,'Module']]],
   ['excludeexchangeq',['excludeExchangeQ',['../classHF_1_1HartreeFock.html#addf451a38799ca599b7620c75d850a97',1,'HF::HartreeFock']]],
   ['expand_5fbasis_5forbitals',['expand_basis_orbitals',['../namespaceSplineBasis.html#af40170b0ddee9c462d83421f9b199ea7',1,'SplineBasis']]],
   ['extendedgrid',['ExtendedGrid',['../classExtendedGrid.html',1,'']]],

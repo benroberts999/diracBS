@@ -81,7 +81,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac94170e48eb81421b840d7c5a9b750e3"><td class="memItemLeft" align="right" valign="top"><a id="ac94170e48eb81421b840d7c5a9b750e3"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>VertexQED</b> (const <a class="el" href="classDiracOperator_1_1TensorOperator.html">TensorOperator</a> *const h0, const <a class="el" href="classGrid.html">Grid</a> &amp;rgrid, double a=1.0, double b=1.0)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VertexQED</b> (const <a class="el" href="classDiracOperator_1_1TensorOperator.html">TensorOperator</a> *const h0, const <a class="el" href="classGrid.html">Grid</a> &amp;rgrid, double <a class="el" href="classDiracOperator_1_1VertexQED.html#ad50dc1e62ec61b268012abe77f1e0bbd">a</a>=1.0, double b=1.0)</td></tr>
 <tr class="separator:ac94170e48eb81421b840d7c5a9b750e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9b271e061746a5b2aa9149f0f390bd7"><td class="memItemLeft" align="right" valign="top"><a id="ab9b271e061746a5b2aa9149f0f390bd7"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDiracOperator_1_1VertexQED.html#ab9b271e061746a5b2aa9149f0f390bd7">name</a> () const override final</td></tr>
@@ -180,7 +180,11 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>reducedME</b> (cons
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6b5a15325c0aa7d69bc4ca63438b9001"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDiracOperator_1_1VertexQED.html#a6b5a15325c0aa7d69bc4ca63438b9001">vertex_func</a> (const <a class="el" href="classGrid.html">Grid</a> &amp;rgrid, double a, double b, std::vector&lt; double &gt; v={})</td></tr>
+<tr class="memitem:ad50dc1e62ec61b268012abe77f1e0bbd"><td class="memItemLeft" align="right" valign="top"><a id="ad50dc1e62ec61b268012abe77f1e0bbd"></a>
+static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDiracOperator_1_1VertexQED.html#ad50dc1e62ec61b268012abe77f1e0bbd">a</a> (double z)</td></tr>
+<tr class="memdesc:ad50dc1e62ec61b268012abe77f1e0bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fitting factor for hyperfine. Default a(Z) <br /></td></tr>
+<tr class="separator:ad50dc1e62ec61b268012abe77f1e0bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b5a15325c0aa7d69bc4ca63438b9001"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDiracOperator_1_1VertexQED.html#a6b5a15325c0aa7d69bc4ca63438b9001">vertex_func</a> (const <a class="el" href="classGrid.html">Grid</a> &amp;rgrid, double <a class="el" href="classDiracOperator_1_1VertexQED.html#ad50dc1e62ec61b268012abe77f1e0bbd">a</a>, double b, std::vector&lt; double &gt; v={})</td></tr>
 <tr class="memdesc:a6b5a15325c0aa7d69bc4ca63438b9001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes existing radial vector, multiplies by:  <a href="#a6b5a15325c0aa7d69bc4ca63438b9001">More...</a><br /></td></tr>
 <tr class="separator:a6b5a15325c0aa7d69bc4ca63438b9001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -261,7 +265,7 @@ std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 </div><div class="memdoc">
 
 <p>Takes existing radial vector, multiplies by: </p>
-<p>A * a0 * exp( - b * r / a0). a0 = alpha = 1/137. b=1 by default. A should be fitted. nb: can give it an empty vector, to just get the exponential function </p>
+<p>a(Z) * a0 * exp( - b * r / a0). a0 = alpha = 1/137. b=1 by default. A should be fitted. a(Z) = 1.0 + 28.5/Z nb: can give it an empty vector, to just get the exponential function </p>
 
 </div>
 </div>

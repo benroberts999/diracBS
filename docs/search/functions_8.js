@@ -5,6 +5,7 @@ var searchData=
   ['imaginaryq',['imaginaryQ',['../classDiracOperator_1_1TensorOperator.html#a32ae1de62e91c3ecdd9fdf343869a242',1,'DiracOperator::TensorOperator']]],
   ['indexfromkappa',['indexFromKappa',['../namespaceAngular.html#add4f0e2236d0dbd39858290bb51ccae5',1,'Angular']]],
   ['inner_5fproduct',['inner_product',['../namespaceqip.html#a6d591bea7748e9bdaec07966859e1f73',1,'qip']]],
+  ['inputblock',['InputBlock',['../classIO_1_1InputBlock.html#af5d72809e505d69167d5ce8d856efb13',1,'IO::InputBlock::InputBlock()'],['../classIO_1_1InputBlock.html#a5f8cb96dc0a94a3edaa2372bafa5ba29',1,'IO::InputBlock::InputBlock(std::string_view name, std::initializer_list&lt; Option &gt; options={})'],['../classIO_1_1InputBlock.html#a28a0c086260304f6ffba888daf401952',1,'IO::InputBlock::InputBlock(std::string_view name, const std::string &amp;string_input)'],['../classIO_1_1InputBlock.html#a046fe2cd507326632792e594c99185de',1,'IO::InputBlock::InputBlock(std::string_view name, const std::istream &amp;file)']]],
   ['int_5fto_5froman',['int_to_roman',['../namespaceAtomData.html#a06fd9706c6e9c2817badb23d5c271fd0',1,'AtomData']]],
   ['interpolate',['interpolate',['../namespaceInterpolator.html#a7ac8f33dc84a0567ed740836a047b4dd',1,'Interpolator']]],
   ['inverse',['inverse',['../classLinAlg_1_1SqMatrix.html#aeffb648ea2df716051a01cfe78b27f21',1,'LinAlg::SqMatrix::inverse()'],['../classLinAlg_1_1ComplexSqMatrix.html#a36e524ac7323d41ea57768df8cc2390c',1,'LinAlg::ComplexSqMatrix::inverse()']]],

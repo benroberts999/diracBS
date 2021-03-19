@@ -1,7 +1,8 @@
 var searchData=
 [
   ['f',['f',['../classDiracSpinor.html#a3d381cf9f0e41dc1b1d3dddf7cf2a503',1,'DiracSpinor::f()'],['../namespaceDiracHydrogen.html#a35551459588bf55899000b8eaedc1a72',1,'DiracHydrogen::f()']]],
-  ['fieldshift',['fieldShift',['../namespaceModule.html#a2dc32d10f2cec82d6c5f9c35f16478d0',1,'Module']]],
+  ['fieldshift',['fieldShift',['../namespaceModule.html#a1ea994e923c889d82851c144931f3eac',1,'Module']]],
+  ['file_5fto_5fstring',['file_to_string',['../namespaceIO.html#a8fee11e45e203e6abda2785d4a9d6d14',1,'IO']]],
   ['fill',['fill',['../classAngular_1_1Ck__ab.html#a05a42bf60f04f8e45721ac9bad3e1a51',1,'Angular::Ck_ab::fill()'],['../classAngular_1_1SixJ.html#a090d3db7a15afe9a387621619ef0bbce',1,'Angular::SixJ::fill()']]],
   ['fill_5fhamiltonian_5fmatrix',['fill_Hamiltonian_matrix',['../namespaceSplineBasis.html#a73a50bee98288badee81104893028d70',1,'SplineBasis']]],
   ['fillbesselvec',['fillBesselVec',['../namespaceSphericalBessel.html#a3615b3e888bc7a60cfeefdd6ad03e8ef',1,'SphericalBessel']]],
@@ -11,7 +12,7 @@ var searchData=
   ['find_5fspin',['find_spin',['../namespaceNuclear.html#ad5a1f66ed77aad51c85014f92364ae69',1,'Nuclear']]],
   ['findisotopedata',['findIsotopeData',['../namespaceNuclear.html#a8ead39509a69951337f10ff7e7e2de3b',1,'Nuclear']]],
   ['findisotopelist',['findIsotopeList',['../namespaceNuclear.html#a34b56444e3dc827a5660d1148de0b4ff',1,'Nuclear']]],
-  ['fitparametric',['fitParametric',['../namespaceModule.html#a21a43640888420c0ebe918fc3c10830e',1,'Module']]],
+  ['fitparametric',['fitParametric',['../namespaceModule.html#ad0d357df19907cdaf5c8b97156fe0cb4',1,'Module']]],
   ['fitsigma_5fhfbrueckner',['fitSigma_hfBrueckner',['../classWavefunction.html#a09c8fd9c5768cf18ddb2427f57b8d1b1',1,'Wavefunction']]],
   ['form_5fbasis',['form_basis',['../namespaceSplineBasis.html#a0e0edf847781af2dadc99568750d8ba9',1,'SplineBasis']]],
   ['form_5fdpsi',['form_dPsi',['../classExternalField_1_1TDHFbasis.html#a759f06f2953536536c99b95b90f8f269',1,'ExternalField::TDHFbasis']]],

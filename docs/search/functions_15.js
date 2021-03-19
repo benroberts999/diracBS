@@ -2,7 +2,6 @@ var searchData=
 [
   ['vbrfa',['VbrFa',['../classHF_1_1Breit.html#ab8e3d6746f6cc9b2240ad26dbd025de6',1,'HF::Breit']]],
   ['vertex_5ffunc',['vertex_func',['../classDiracOperator_1_1VertexQED.html#a6b5a15325c0aa7d69bc4ca63438b9001',1,'DiracOperator::VertexQED']]],
-  ['vertexqed',['vertexQED',['../namespaceModule.html#aadf0318e360ce31a2bddc48da478cc2c',1,'Module']]],
   ['vex_5fapprox',['vex_approx',['../namespaceHF.html#ac1db3db0a43960380fd0fe2096b8c7ec',1,'HF']]],
   ['vexfa',['vexFa',['../namespaceHF.html#aca9706ff70b262673500f51577a48bd5',1,'HF']]],
   ['volotkabw_5ff',['volotkaBW_F',['../namespaceDiracOperator_1_1Hyperfine.html#a473bdf5e8ed625c5241e1604468929cf',1,'DiracOperator::Hyperfine']]],

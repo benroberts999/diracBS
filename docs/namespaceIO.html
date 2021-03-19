@@ -80,15 +80,39 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO_1_1UserInput.html">UserInput</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores + retrives user input.  <a href="classIO_1_1UserInput.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO_1_1InputBlock.html">InputBlock</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds list of Options, and a list of other InputBlocks. Can be initialised with a list of options, with a string, or from a file (ifstream). Format for input is, e.g.,:  <a href="classIO_1_1InputBlock.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO_1_1UserInputBlock.html">UserInputBlock</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores input options for a specific 'block'; usually use '<a class="el" href="classIO_1_1UserInput.html" title="Stores + retrives user input. ">UserInput</a>' (instead of '<a class="el" href="classIO_1_1UserInputBlock.html" title="Stores input options for a specific &#39;block&#39;; usually use &#39;UserInput&#39; (instead of &#39;UserInputBlock&#39;) - ...">UserInputBlock</a>') - has essentially the same functionality (but don't need to specify block name on '.get')  <a href="classIO_1_1UserInputBlock.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIO_1_1IsVector.html">IsVector</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to determine if a class template in vector.  <a href="structIO_1_1IsVector.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structIO_1_1Option.html">Option</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple struct; holds key-value pair, both strings. == compares key.  <a href="structIO_1_1Option.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a1e5f0c7eb4a5422241d168b39a7641f0"><td class="memItemLeft" align="right" valign="top"><a id="a1e5f0c7eb4a5422241d168b39a7641f0"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceIO.html#a1e5f0c7eb4a5422241d168b39a7641f0">removeSpaces</a> (std::string lines)</td></tr>
+<tr class="memdesc:a1e5f0c7eb4a5422241d168b39a7641f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all white space (space, tab, newline), AND quote marks! <br /></td></tr>
+<tr class="separator:a1e5f0c7eb4a5422241d168b39a7641f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5ccc8be8075920b65a6e9d392cf6fb"><td class="memItemLeft" align="right" valign="top"><a id="a3c5ccc8be8075920b65a6e9d392cf6fb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceIO.html#a3c5ccc8be8075920b65a6e9d392cf6fb">removeBlockComments</a> (std::string &amp;input)</td></tr>
+<tr class="memdesc:a3c5ccc8be8075920b65a6e9d392cf6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all c++ style block comments from a string. <br /></td></tr>
+<tr class="separator:a3c5ccc8be8075920b65a6e9d392cf6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99893271836fc56247b72538c09643db"><td class="memItemLeft" align="right" valign="top"><a id="a99893271836fc56247b72538c09643db"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceIO.html#a99893271836fc56247b72538c09643db">removeComments</a> (const std::string &amp;input)</td></tr>
+<tr class="memdesc:a99893271836fc56247b72538c09643db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all c++ style comments from a string (block and line) <br /></td></tr>
+<tr class="separator:a99893271836fc56247b72538c09643db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9c8b910b40cd04bd7d20fb7c5fa0447"><td class="memTemplParams" colspan="2"><a id="ab9c8b910b40cd04bd7d20fb7c5fa0447"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab9c8b910b40cd04bd7d20fb7c5fa0447"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceIO.html#ab9c8b910b40cd04bd7d20fb7c5fa0447">parse_str_to_T</a> (const std::string &amp;value_as_str)</td></tr>
+<tr class="memdesc:ab9c8b910b40cd04bd7d20fb7c5fa0447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a string to type T by stringstream. <br /></td></tr>
+<tr class="separator:ab9c8b910b40cd04bd7d20fb7c5fa0447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fee11e45e203e6abda2785d4a9d6d14"><td class="memItemLeft" align="right" valign="top"><a id="a8fee11e45e203e6abda2785d4a9d6d14"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceIO.html#a8fee11e45e203e6abda2785d4a9d6d14">file_to_string</a> (const std::istream &amp;file)</td></tr>
+<tr class="memdesc:a8fee11e45e203e6abda2785d4a9d6d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses entire file into string. Note: v. inefficient. <br /></td></tr>
+<tr class="separator:a8fee11e45e203e6abda2785d4a9d6d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b693c47b005af36912997236273e8b6"><td class="memItemLeft" align="right" valign="top"><a id="a8b693c47b005af36912997236273e8b6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceIO.html#a8b693c47b005af36912997236273e8b6">print_line</a> (const char c=' *', const int num=80)</td></tr>
 <tr class="memdesc:a8b693c47b005af36912997236273e8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a line of 'c' characters (dflt '*'), num chars long (dflt 80) to cout. <br /></td></tr>
@@ -99,14 +123,18 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>time_date</b> 
 <tr class="memitem:a2f3c0f2735e81024ffab4906c236e220"><td class="memItemLeft" align="right" valign="top"><a id="a2f3c0f2735e81024ffab4906c236e220"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>date</b> ()</td></tr>
 <tr class="separator:a2f3c0f2735e81024ffab4906c236e220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29661464958f6fee8c56139dddc3aee7"><td class="memTemplParams" colspan="2"><a id="a29661464958f6fee8c56139dddc3aee7"></a>
-template&lt;typename T , std::enable_if_t&lt; std::is_arithmetic_v&lt; T &gt;, int &gt;  = 0&gt; </td></tr>
-<tr class="memitem:a29661464958f6fee8c56139dddc3aee7"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>acceptableQ</b> (const T &amp;value, const std::pair&lt; T, T &gt; &amp;list, const bool print=true)</td></tr>
-<tr class="separator:a29661464958f6fee8c56139dddc3aee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f5bb2a836345b0bbc1c6e137df3512d"><td class="memTemplParams" colspan="2"><a id="a2f5bb2a836345b0bbc1c6e137df3512d"></a>
-template&lt;typename T , typename List &gt; </td></tr>
-<tr class="memitem:a2f5bb2a836345b0bbc1c6e137df3512d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>acceptableQ</b> (const T &amp;value, const List &amp;list, const bool print=true)</td></tr>
-<tr class="separator:a2f5bb2a836345b0bbc1c6e137df3512d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad09b1ff7ed228c4e40f1afb3c98a3229"><td class="memItemLeft" align="right" valign="top"><a id="ad09b1ff7ed228c4e40f1afb3c98a3229"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="classIO_1_1InputBlock.html">InputBlock</a> block, std::string_view name)</td></tr>
+<tr class="separator:ad09b1ff7ed228c4e40f1afb3c98a3229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a093e6b977a187442ad06983d40ba7cc9"><td class="memItemLeft" align="right" valign="top"><a id="a093e6b977a187442ad06983d40ba7cc9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (std::string_view name, <a class="el" href="classIO_1_1InputBlock.html">InputBlock</a> block)</td></tr>
+<tr class="separator:a093e6b977a187442ad06983d40ba7cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59dd98760c6f1fe6fbfa6061286e629"><td class="memItemLeft" align="right" valign="top"><a id="af59dd98760c6f1fe6fbfa6061286e629"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="classIO_1_1InputBlock.html">InputBlock</a> block, std::string_view name)</td></tr>
+<tr class="separator:af59dd98760c6f1fe6fbfa6061286e629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f5e87cef65c2c2d7e1652c4c2576e9c"><td class="memItemLeft" align="right" valign="top"><a id="a6f5e87cef65c2c2d7e1652c4c2576e9c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (std::string_view name, <a class="el" href="classIO_1_1InputBlock.html">InputBlock</a> block)</td></tr>
+<tr class="separator:a6f5e87cef65c2c2d7e1652c4c2576e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>In-out (timers, profilers, and read/write data) </p>
