@@ -63,6 +63,7 @@ public:
   //! Fill all non-zero Qk integrals (nb: often don't need all)
   //! @details Note: You can also just 'add' indevedidual terms using ->insert()
   void fill(const YkTable &yk) {
+    std::cout << "\nTotal: " << yk.get_a().size() << " basis functions\n";
     if constexpr (use_omp && symmetry == Symmetry::Qk) {
       fill_Rk(yk);
     } else if constexpr (use_omp && symmetry == Symmetry::Wk) {
@@ -76,14 +77,16 @@ public:
 
   //! tmp
   void count() const {
-    std::size_t num = 0;
+    std::size_t num_ks = 0;
     for (const auto &[key, value] : m_data) {
-      num += value.size();
+      num_ks += value.size();
       // None of the vectors should be empty - just a consistancy check
       if (value.size() == 0)
         std::cout << "**\n";
     }
-    std::cout << "Qk table contains: " << num << " non-zero elements\n";
+    std::cout << "Qk table contains: " << num_ks << " non-zero elements\n";
+    std::cout << "Qk table contains: " << double(num_ks) / double(m_data.size())
+              << " average non-zero k's per Q_abcd\n";
   }
 
   //! Add a specific new Q (for each k) to map. If exists, does nothing

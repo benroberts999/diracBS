@@ -20,7 +20,7 @@ bool QkTable(std::ostream &obuff) {
   Wavefunction wf({1000, 1.0e-5, 50.0, 10.0, "loglinear", -1.0},
                   {"Na", -1, "Fermi", -1.0, -1.0}, 1.0);
   wf.hartreeFockCore("HartreeFock", 0.0, "[Ne]");
-  wf.formBasis({"8spdf", 30, 7, 1.0e-5, 1.0e-6, 30.0, false});
+  wf.formBasis({"20spdfg", 30, 7, 1.0e-5, 1.0e-6, 30.0, false});
 
   // Form the Coulomb lookup tables:
 
@@ -37,6 +37,8 @@ bool QkTable(std::ostream &obuff) {
 
   qk.count();
   std::cout << "\n\n";
+
+  return true;
 
   // Compare the speed of using Qk lookup table vs. direct calculation
   {
