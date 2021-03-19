@@ -1,6 +1,6 @@
 #include "Modules/testFeynman.hpp"
 #include "Coulomb/Coulomb.hpp"
-#include "IO/UserInput.hpp"
+#include "IO/InputBlock.hpp"
 #include "MBPT/FeynmanSigma.hpp"
 #include "Maths/LinAlg_MatrixVector.hpp"
 #include "Maths/NumCalc_quadIntegrate.hpp"
@@ -13,7 +13,7 @@ using ComplexDouble = LinAlg::ComplexDouble;
 
 namespace Module {
 
-void testFeynman(const IO::UserInputBlock &input, const Wavefunction &wf) {
+void testFeynman(const IO::InputBlock &input, const Wavefunction &wf) {
   std::cout << "\ntestFeynman:\n";
 
   input.checkBlock({"real_omega", "max_l", "screening", "rmin", "rmax",
@@ -48,8 +48,7 @@ void testFeynman(const IO::UserInputBlock &input, const Wavefunction &wf) {
   const auto testGQ = input.get("testGQ", true);
   const auto testPol = input.get("testPol", false);
 
-  const auto omim_v =
-      input.get_list("omim", std::vector{0.0, 1.0, 10.0, 100.0});
+  const auto omim_v = input.get("omim", std::vector{0.0, 1.0, 10.0, 100.0});
 
   //----------------------------------------------------------------------------
   // 1. Test Q vs. yk

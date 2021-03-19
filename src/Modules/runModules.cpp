@@ -1,5 +1,5 @@
 #include "Modules/runModules.hpp"
-#include "IO/UserInput.hpp"
+#include "IO/InputBlock.hpp"
 #include "Modules/modules_list.hpp"
 #include "Wavefunction/DiracSpinor.hpp"
 #include "Wavefunction/Wavefunction.hpp"
@@ -16,22 +16,21 @@
 namespace Module {
 
 //******************************************************************************
-void runModules(const IO::UserInput &input, const Wavefunction &wf) {
-  auto modules = input.module_list();
-  for (const auto &module : modules) {
+void runModules(const IO::InputBlock &input, const Wavefunction &wf) {
+  for (const auto &module : input.blocks()) {
     runModule(module, wf);
   }
 }
 
 //******************************************************************************
-void runModule(const IO::UserInputBlock &module_input,
+void runModule(const IO::InputBlock &module_input,
                const Wavefunction &wf) //
 {
   const auto &in_name = module_input.name();
 
   // Loop through all available modules, run correct one
   for (const auto &[mod_name, mod_func] : module_list) {
-    if (in_name == "Module::" + mod_name)
+    if (in_name == "Module::" + mod_name || in_name == mod_name)
       return mod_func(module_input, wf);
   }
 
@@ -86,7 +85,7 @@ static void write_orbitals(const std::string &fname,
 }
 
 //******************************************************************************
-void writeOrbitals(const IO::UserInputBlock &input, const Wavefunction &wf) {
+void writeOrbitals(const IO::InputBlock &input, const Wavefunction &wf) {
   const std::string ThisModule = "Module::WriteOrbitals";
   input.checkBlock({"label", "l"});
   std::cout << "\n Running: " << ThisModule << "\n";

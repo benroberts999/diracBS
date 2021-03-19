@@ -9,6 +9,7 @@
 #include "Modules/matrixElements.hpp"
 #include "Modules/pnc.hpp"
 #include "Modules/polarisability.hpp"
+#include "Modules/qed.hpp"
 #include "Modules/runModules.hpp"
 #include "Modules/screeningFactors.hpp"
 #include "Modules/testFeynman.hpp"
@@ -19,16 +20,15 @@
 #include <vector>
 class Wavefunction;
 namespace IO {
-class UserInputBlock;
-class UserInput;
+class InputBlock;
+class InputBlock;
 } // namespace IO
 
 namespace Module {
 
 // Add new modules to this list:
-static const std::vector<
-    std::pair<std::string, void (*)(const IO::UserInputBlock &input,
-                                    const Wavefunction &wf)>>
+static const std::vector<std::pair<
+    std::string, void (*)(const IO::InputBlock &input, const Wavefunction &wf)>>
     module_list{{"Tests", &Module_tests},
                 {"WriteOrbitals", &writeOrbitals},
                 {"AtomicKernal", &atomicKernal},
@@ -38,6 +38,7 @@ static const std::vector<
                 {"HF_rmag", &HF_rmag},
                 {"pnc", &calculatePNC},
                 {"vertexQED", &vertexQED},
+                {"hyperfine_vertex_test", &hyperfine_vertex_test},
                 {"polarisability", &polarisability},
                 {"testFeynman", &testFeynman},
                 {"matrixElements", &matrixElements},

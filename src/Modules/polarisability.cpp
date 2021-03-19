@@ -1,7 +1,7 @@
 #include "polarisability.hpp"
 #include "DiracOperator/Operators.hpp"
 #include "ExternalField/TDHF.hpp"
-#include "IO/UserInput.hpp"
+#include "IO/InputBlock.hpp"
 #include "MBPT/StructureRad.hpp"
 #include "Wavefunction/Wavefunction.hpp"
 #include <iostream>
@@ -11,7 +11,7 @@
 namespace Module {
 using namespace Polarisability;
 
-void polarisability(const IO::UserInputBlock &input, const Wavefunction &wf) {
+void polarisability(const IO::InputBlock &input, const Wavefunction &wf) {
 
   std::cout << "\nDipole polarisability:\n";
 
@@ -62,7 +62,7 @@ void polarisability(const IO::UserInputBlock &input, const Wavefunction &wf) {
 
   // **************
   // Transition polarisability, alpha and beta:
-  const auto ab_vec = input.get_list<std::string>("transition", {});
+  const auto ab_vec = input.get<std::vector<std::string>>("transition", {});
   const auto ab_ok = (ab_vec.size() >= 2);
   const auto [na, ka] =
       ab_ok ? AtomData::parse_symbol(ab_vec[0]) : std::pair{0, 0};

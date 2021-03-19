@@ -65,7 +65,6 @@ std::vector<double> form_Hel(const std::vector<double> &r, double x_simple,
     // and then interpolate the intermediate points
     // const std::size_t stride = 6; // r.size()
     const std::size_t stride = r.size() / 550;
-    // std::cout << "stride=" << stride << "\n";
     const auto i_max_rcut = [&]() {
       for (std::size_t i = 0; i < imax; ++i) {
         if (r[i] > rcut)
@@ -252,6 +251,72 @@ double vUehling(double r, double rN, double z, double alpha) {
 }
 
 //******************************************************************************
+double Q_MLVP(double r, double rN) {
+  // magnetic loop vacuum polarisation (VP vertex)
+  // Performs t integral. This multiplies regular operator
+
+  // variables needed for gsl
+  constexpr double abs_err_lim = 0.0;
+  constexpr double rel_err_lim = 1.0e-6;
+  constexpr unsigned long max_num_subintvls = 750;
+  gsl_set_error_handler_off();
+
+  // compute the integral at each radial grid point
+
+  // intialise gsl
+  gsl_function f_gsl;
+  RadiativePotential::MLVP_params params{r, rN};
+  f_gsl.function = &Helper::Qt_MLVP;
+  f_gsl.params = &params;
+
+  // integrate using gsl
+  double result{0.0};
+  double abs_err{0.0};
+  gsl_integration_workspace *gsl_int_wrk =
+      gsl_integration_workspace_alloc(max_num_subintvls + 1);
+  gsl_integration_qagiu(&f_gsl, 1.0, abs_err_lim, rel_err_lim,
+                        max_num_subintvls, gsl_int_wrk, &result, &abs_err);
+  gsl_integration_workspace_free(gsl_int_wrk);
+
+  return result;
+}
+
+//------------------------------------------------------------------------------
+double Helper::Qt_MLVP(double t, void *p) {
+  // This in Qt, defined via Q(r) = Int[ Qt(t,r) , {t,1,infty}]
+
+  // Main:
+  // A. V. Volotka, D. A. Glazov, I. I. Tupitsyn, N. S. Oreshkina, G.
+  // Plunien, and V. M. Shabaev, Phys. Rev. A 78, 062507 (2008) - Equation (18)
+
+  // also:
+  // P. Sunnergren, H. Persson, S. Salomonson, S. M. Schneider, I. Lindgren,
+  // and G. Soff, Phys. Rev. A 58, 1055 (1998) -- Equation (58)
+  // * note: This has typo compared to above
+
+  // obtain the radial grid parameters and convert to relativistic units
+  const auto [r, r_N] = *(static_cast<MLVP_params *>(p));
+
+  const auto chi = std::min(r, r_N) / PhysConst::alpha;
+  const auto eta = std::max(r, r_N) / PhysConst::alpha;
+
+  constexpr double a0 = PhysConst::alpha / (3.0 * M_PI);
+  const auto t2 = t * t;
+  const auto top = std::sqrt(t2 - 1.0) * (2 * t2 + 1.0) * (2 * t * eta + 1.0);
+  const auto exp_t4 = std::exp(-2 * t * eta) / (t2 * t2);
+  const auto rn_tmp = r_N; // to avoid clang error re: capturing binding ref
+  const auto finite = [=]() {
+    if (rn_tmp > 1.0e-6) {
+      const auto x = 2.0 * chi * t;
+      return (3.0 / (x * x * x)) * xCoshxMinusSinhx(x);
+    }
+    return 1.0;
+  }(); // immediately invoked lambda
+
+  return a0 * top * exp_t4 * finite;
+}
+
+//******************************************************************************
 static Fit_AB fit_AB;
 double vSEh(double r, double rN, double z, double alpha) {
   [[maybe_unused]] auto sp1 = IO::Profile::safeProfiler(__func__);
@@ -356,7 +421,7 @@ double vSE_Hmag(double r, double rN, double z, double alpha) {
                         max_num_subintvls, gsl_int_wrk, &int_result, &abs_err);
   gsl_integration_workspace_free(gsl_int_wrk);
 
-  const auto pre_factor = 3.0 * z * alpha / M_PI; // XXX check!
+  const auto pre_factor = 3.0 * z * alpha / M_PI;
   return pre_factor * int_result;
 }
 
@@ -377,21 +442,15 @@ double vUehcommon(double t, double chi) {
 
 //------------------------------------------------------------------------------
 double vUehf_smallr(double r, double rN, double chi) {
-  // nb: a part can be removed and done analyitcally
-  auto a = (r / rN) * chi;
-  auto b = std::exp(-chi) * (1.0 + chi);
-  auto c = std::sinh(a);
+  const auto a = (r / rN) * chi;
+  const auto b = std::exp(-chi) * (1.0 + chi);
+  const auto c = std::sinh(a);
   return a - b * c;
 }
 double vUehf_larger(double r, double rN, double chi) {
   const auto tmp = (r / rN) * chi;
   const auto a = std::exp(-tmp);
-  // const auto b = chi * std::cosh(chi) - sinh(chi); // XXX unstable small chi
-  // Good to parts in 10^6
-  const auto chi3 = chi * chi * chi;
-  const auto b = (chi < 0.5) ? chi3 / 3.0 + (chi3 * chi * chi) / 30.0 +
-                                   (chi3 * chi3 * chi) / 840.0
-                             : chi * std::cosh(chi) - sinh(chi);
+  const auto b = xCoshxMinusSinhx(chi);
   return a * b;
 }
 
@@ -415,25 +474,25 @@ double gslfunc_Ueh_larger(double t, void *p) {
 
 //******************************************************************************
 double gb_I1(double t, double z, double alpha) {
-  auto t2 = t * t;
-  auto za = z * alpha;
-  double a = 1.0 / std::sqrt(t2 - 1.0);
-  double b = 1.0 - 1.0 / (2.0 * t2);
-  double c = std::log(t2 - 1.0) + 4.0 * std::log(1.0 / za + 0.5);
-  double d = -1.5 + 1.0 / t2;
+  const auto t2 = t * t;
+  const auto za = z * alpha;
+  const double a = 1.0 / std::sqrt(t2 - 1.0);
+  const double b = 1.0 - 1.0 / (2.0 * t2);
+  const double c = std::log(t2 - 1.0) + 4.0 * std::log(1.0 / za + 0.5);
+  const double d = -1.5 + 1.0 / t2;
   return a * (b * c + d);
 }
 
 double gb_I2(double t, double r, double rN, double z, double alpha) {
-  auto za = z * alpha;
-  auto ttoa = 2.0 * t / alpha;
-  double rA = 0.07 * za * za * alpha;
-  auto expr = std::exp(rA * ttoa);
+  const auto za = z * alpha;
+  const auto ttoa = 2.0 * t / alpha;
+  const double rA = 0.07 * za * za * alpha;
+  const auto expr = std::exp(rA * ttoa);
 
-  auto f = [=](double x) {
-    auto arg1 = (std::abs(r - x) + rA) * ttoa;
-    auto arg2 = (r + x + rA) * ttoa;
-    auto a = ExpInt1(arg1) - ExpInt1(arg2);
+  const auto f = [=](double x) {
+    const auto arg1 = (std::abs(r - x) + rA) * ttoa;
+    const auto arg2 = (r + x + rA) * ttoa;
+    const auto a = ExpInt1(arg1) - ExpInt1(arg2);
     return x * a;
   };
 
@@ -444,19 +503,17 @@ double gb_I2(double t, double r, double rN, double z, double alpha) {
 double gb_GSEh_larger(double r, double rN, double chi) {
   // Essentially duplicate of Uehling, but swapped large/small r ?
   const auto chi3 = chi * chi * chi;
-  auto a = std::exp(-chi * r / rN) * 2.0 / chi3;
-  const auto b = (chi < 0.5) ? chi3 / 3.0 + (chi3 * chi * chi) / 30.0 +
-                                   (chi3 * chi3 * chi) / 840.0
-                             : chi * std::cosh(chi) - sinh(chi);
+  const auto a = std::exp(-chi * r / rN) * 2.0 / chi3;
+  const auto b = xCoshxMinusSinhx(chi);
   return a * b;
 }
 
 double gb_GSEh_smallr(double r, double rN, double chi) {
   // Essentially duplicate of Uehling, but swapped large/small r ?
   const auto chi3 = chi * chi * chi;
-  auto a = 2.0 / chi3;
-  auto b = (chi * r / rN);
-  auto c = std::exp(-chi) * (1.0 + chi) * std::sinh(chi * r / rN);
+  const auto a = 2.0 / chi3;
+  const auto b = (chi * r / rN);
+  const auto c = std::exp(-chi) * (1.0 + chi) * std::sinh(chi * r / rN);
   return a * (b - c);
 }
 
@@ -464,7 +521,7 @@ double gb_GSEh_smallr(double r, double rN, double chi) {
 double gslfunc_SEh_smallr(double t, void *p) {
   const auto [r, rN, z, alpha] = *(static_cast<RadPot_params *>(p));
   const auto chi = 2.0 * t * rN / alpha;
-  double rA = 0.07 * z * z * alpha * alpha * alpha;
+  const double rA = 0.07 * z * z * alpha * alpha * alpha;
   return gb_I1(t, z, alpha) *
          (gb_GSEh_smallr(r, rN, chi) -
           (rA / (rN * rN * rN)) * gb_I2(t, r, rN, z, alpha));
@@ -472,7 +529,7 @@ double gslfunc_SEh_smallr(double t, void *p) {
 double gslfunc_SEh_larger(double t, void *p) {
   const auto [r, rN, z, alpha] = *(static_cast<RadPot_params *>(p));
   const auto chi = 2.0 * t * rN / alpha;
-  double rA = 0.07 * z * z * alpha * alpha * alpha;
+  const double rA = 0.07 * z * z * alpha * alpha * alpha;
   return gb_I1(t, z, alpha) *
          (gb_GSEh_larger(r, rN, chi) -
           (rA / (rN * rN * rN)) * gb_I2(t, r, rN, z, alpha));
