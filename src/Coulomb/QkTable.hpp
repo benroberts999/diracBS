@@ -7,6 +7,7 @@
 #include <array>
 #include <cassert>
 #include <map>
+#include <unordered_map>
 
 namespace Coulomb {
 
@@ -34,6 +35,7 @@ enum class Symmetry { Qk, Wk, none };
 template <typename Real = float, Symmetry symmetry = Symmetry::none>
 class QkTable {
 
+  using BigIndex = uint64_t;
   using Index = uint16_t;
   using IndexSet = std::array<Index, 4>;
 #if defined(_OPENMP)
@@ -45,7 +47,11 @@ class QkTable {
 #endif
 
 private:
-  std::map<IndexSet, std::vector<Real>> m_data{};
+  // static constexpr bool use_map = true;
+  // std::map<IndexSet, std::vector<Real>> m_data{};
+
+  static constexpr bool use_map = false;
+  std::unordered_map<BigIndex, std::vector<Real>> m_data{};
 
 public:
   // 'rule of zero' for now seems fine
@@ -201,29 +207,47 @@ public:
 
 public:
   //! Returns index set {a,b,c,d} in "Normal order" (depends on Symmetry)
-  IndexSet NormalOrder(const DiracSpinor &a, const DiracSpinor &b,
-                       const DiracSpinor &c, const DiracSpinor &d) const {
+  auto NormalOrder(const DiracSpinor &a, const DiracSpinor &b,
+                   const DiracSpinor &c, const DiracSpinor &d) const {
     return NormalOrder(a.nk_index(), b.nk_index(), c.nk_index(), d.nk_index());
   }
 
-  IndexSet NormalOrder(int a, int b, int c, int d) const {
+  auto NormalOrder(int a, int b, int c, int d) const {
     return NormalOrder(Index(a), Index(b), Index(c), Index(d));
   }
 
-  IndexSet NormalOrder(const IndexSet &abcd) const {
+  auto NormalOrder(const IndexSet &abcd) const {
     const auto [a, b, c, d] = abcd;
     return NormalOrder(a, b, c, d);
   }
 
-  IndexSet NormalOrder(Index a, Index b, Index c, Index d) const {
-    if constexpr (symmetry == Symmetry::Qk) {
-      return NormalOrder_Rk(a, b, c, d);
-    } else if constexpr (symmetry == Symmetry::Wk) {
-      return NormalOrder_Wk(a, b, c, d);
-    } else if constexpr (symmetry == Symmetry::none) {
-      return NormalOrder_none(a, b, c, d);
+  auto NormalOrder(Index a, Index b, Index c, Index d) const {
+    if constexpr (use_map) {
+      if constexpr (symmetry == Symmetry::Qk) {
+        return NormalOrder_Rk(a, b, c, d);
+      } else if constexpr (symmetry == Symmetry::Wk) {
+        return NormalOrder_Wk(a, b, c, d);
+      } else if constexpr (symmetry == Symmetry::none) {
+        return NormalOrder_none(a, b, c, d);
+      } else {
+        assert(false);
+      }
     } else {
-      assert(false);
+      if constexpr (symmetry == Symmetry::Qk) {
+        auto is = NormalOrder_Rk(a, b, c, d);
+        auto z = reinterpret_cast<uint64_t *>(&is);
+        return *z;
+      } else if constexpr (symmetry == Symmetry::Wk) {
+        auto is = NormalOrder_Wk(a, b, c, d);
+        auto z = reinterpret_cast<uint64_t *>(&is);
+        return *z;
+      } else if constexpr (symmetry == Symmetry::none) {
+        auto is = NormalOrder_none(a, b, c, d);
+        auto z = reinterpret_cast<uint64_t *>(&is);
+        return *z;
+      } else {
+        assert(false);
+      }
     }
   }
 
