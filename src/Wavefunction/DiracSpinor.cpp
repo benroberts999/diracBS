@@ -211,8 +211,9 @@ DiracSpinor &DiracSpinor::operator=(const DiracSpinor &other) {
 // comparitor overloads:
 
 bool operator==(const DiracSpinor &lhs, const DiracSpinor &rhs) {
-  // return lhs.n == rhs.n && lhs.k == rhs.k;
-  return lhs.m_nk_index == rhs.m_nk_index;
+  return lhs.n == rhs.n && lhs.k == rhs.k;
+  // nb: m_nk_index invalid when n=0, so cannot use (splines have n=0)
+  // return lhs.m_nk_index == rhs.m_nk_index;
 }
 
 bool operator!=(const DiracSpinor &lhs, const DiracSpinor &rhs) {
@@ -220,10 +221,11 @@ bool operator!=(const DiracSpinor &lhs, const DiracSpinor &rhs) {
 }
 
 bool operator<(const DiracSpinor &lhs, const DiracSpinor &rhs) {
-  return lhs.m_nk_index < rhs.m_nk_index;
-  // if (lhs.n == rhs.n)
-  //   return lhs.m_k_index < rhs.m_k_index;
-  // return lhs.n < rhs.n;
+  // nb: m_nk_index invalid when n=0, so cannot use (splines have n=0)
+  // return lhs.m_nk_index < rhs.m_nk_index;
+  if (lhs.n == rhs.n)
+    return lhs.m_k_index < rhs.m_k_index;
+  return lhs.n < rhs.n;
 }
 
 bool operator>(const DiracSpinor &lhs, const DiracSpinor &rhs) {
