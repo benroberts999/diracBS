@@ -3,7 +3,7 @@
 #include "IO/InputBlock.hpp"
 #include "Maths/Interpolator.hpp" //for 'ExtraPotential'
 #include "Modules/runModules.hpp"
-#include "Physics/PhysConst_constants.hpp" //for fit_energies
+#include "Physics/include.hpp"
 #include "Wavefunction/Wavefunction.hpp"
 #include "git.info"
 #include "qip/Vector.hpp"
@@ -21,10 +21,12 @@ int main(int argc, char *argv[]) {
   // std::filesystem not available in g++-7 (getafix version)
   // Reading from a file? Or from command-line?
   const auto fstream = std::fstream(input_text);
-  const std::string default_input = (input_text.size() <= 2)
-                                        ? "Atom{Z=" + input_text + ";}" +
-                                              "HartreeFock { core = [" +
-                                              input_text + "]; }"
+  const auto symb = AtomData::atomicSymbol(AtomData::atomic_Z(input_text));
+  const auto core = symb == "H" ? "" : symb;
+  const std::string default_input = (input_text.size() <= 3)
+                                        ? "Atom{Z=" + symb + ";}" +
+                                              "HartreeFock { core = [" + core +
+                                              "]; valence = 2sp;}"
                                         : input_text;
 
   const auto input = fstream.good() ? IO::InputBlock("ampsci", fstream)
@@ -38,6 +40,7 @@ int main(int argc, char *argv[]) {
 
 //******************************************************************************
 void ampsci(const IO::InputBlock &input) {
+  using namespace std::string_literals;
   IO::ChronoTimer timer("\nampsci");
   std::cout << "\n";
   IO::print_line();
@@ -48,32 +51,32 @@ void ampsci(const IO::InputBlock &input) {
       input.check2({"Atom"}, {{"Z", "Atomic symbol/number (int or string)"},
                               {"A", "Atomic mass number (blank for default)"},
                               {"varAlpha2", "d(a^2)/a_0^2 (1 by default)"}});
-  const auto atom_Z = input.get<std::string>({"Atom"}, "Z", "H");
-  const auto atom_A = input.get({"Atom"}, "A", -1);
+
+  const auto atom_Z = AtomData::atomic_Z(input.get({"Atom"}, "Z", "H"s));
+  const auto atom_A = input.get({"Atom"}, "A", AtomData::defaultA(atom_Z));
   const auto var_alpha = [&]() {
     const auto varAlpha2 = input.get({"Atom"}, "varAlpha2", 1.0);
-    return (varAlpha2 > 0) ? std::sqrt(varAlpha2) : 1.0e-25;
+    return (varAlpha2 > 0.0) ? std::sqrt(varAlpha2) : 1.0e-25;
   }();
 
   // Grid: Get + setup grid parameters
-  input_ok =
-      input_ok &&
-      input.check2(
-          {"Grid"},
-          {{"r0", "Initial grid point, in au (~1e-6)"},
-           {"rmax", "Finial grid point ~100.0"},
-           {"num_points", "Number of grid points ~1000"},
-           {"type", "loglinear or logarithmic"},
-           {"b", "only loglinear: roughly logarithmic for r<b, linear for r>b"},
-           {"fixed_du", "du is uniform grid step size; set this instead of "
-                        "num_points (~0.1)"}});
+  input_ok &= input.check2(
+      {"Grid"},
+      {{"r0", "Initial grid point, in au (~1e-6)"},
+       {"rmax", "Finial grid point ~100.0"},
+       {"num_points", "Number of grid points ~1000"},
+       {"type", "loglinear or logarithmic"},
+       {"b", "only loglinear: roughly logarithmic for r<b, linear for r>b"},
+       {"du", "du is uniform grid step size; set this instead of "
+              "num_points (~0.1)"}});
 
   const auto r0 = input.get({"Grid"}, "r0", 1.0e-6);
   const auto rmax = input.get({"Grid"}, "rmax", 120.0);
-  // du_tmp>0 means calc num_points
-  const auto du_tmp = input.get({"Grid"}, "fixed_du", -1.0);
+  // du>0 means calc num_points
+  const auto du_option = input.get<double>({"Grid"}, "du");
+  const auto du = du_option ? *du_option : -1.0;
   const auto num_points =
-      (du_tmp > 0) ? 0ul : input.get({"Grid"}, "num_points", 1600ul);
+      (du > 0.0) ? 0ul : input.get({"Grid"}, "num_points", 1600ul);
   const auto b = input.get({"Grid"}, "b", 0.33 * rmax);
   const auto grid_type =
       (b <= r0 || b >= rmax)
@@ -81,19 +84,27 @@ void ampsci(const IO::InputBlock &input) {
           : input.get<std::string>({"Grid"}, "type", "loglinear");
 
   // Nucleus: Get + setup nuclear parameters
-  input_ok = input_ok &&
-             input.check2({"Nucleus"},
-                          {{"rrms", "root-mean-square charge radius, in fm "
-                                    "(blank means will look up default)"},
-                           {"c", "Half-density radius (use instead of rrms)"},
-                           {"t", "Nuclear skin thickness; default = 2.3"},
-                           {"type", "Fermi, spherical, pointlike"}});
-  // if {rrms, t} < 0 means get default (depends on A)
-  const auto c_hdr = input.get({"Nucleus"}, "c", -1.0);
-  const auto skint = input.get({"Nucleus"}, "skin_t", Nuclear::default_t);
+  input_ok &= input.check2({"Nucleus"},
+                           {{"rrms", "root-mean-square charge radius, in fm "
+                                     "(blank means will look up default)"},
+                            {"c", "Half-density radius (use instead of rrms)"},
+                            {"t", "Nuclear skin thickness; default = 2.3"},
+                            {"type", "Fermi, spherical, pointlike"}});
+
+  // usually, give rrms. Giving c will over-ride rrms
+  const auto c_hdr = input.get<double>({"Nucleus"}, "c");
+  auto dflt_rrms = Nuclear::find_rrms(atom_Z, atom_A);
+  if (dflt_rrms <= 0.0 && atom_A != 0 && !c_hdr) {
+    dflt_rrms = Nuclear::approximate_r_rms(atom_A);
+    std::cout << "\nWARNING: isotope Z=" << atom_Z << ", A=" << atom_A
+              << " - cannot find rrms. Using approx formula: rrms=" << dflt_rrms
+              << "\n";
+  }
+  const auto t_skin = input.get({"Nucleus"}, "t", Nuclear::default_t);
   // c (half density radius) takes precidence if c and r_rms are given.
-  const auto rrms = c_hdr <= 0.0 ? input.get({"Nucleus"}, "rrms", -1.0)
-                                 : Nuclear::rrms_formula_c_t(c_hdr, skint);
+  const auto rrms = c_hdr ? Nuclear::rrms_formula_c_t(*c_hdr, t_skin)
+                          : input.get({"Nucleus"}, "rrms", dflt_rrms);
+
   // Set nuc. type explicitely to 'pointlike' if A=0, or r_rms = 0.0
   const auto nuc_type =
       (atom_A == 0 || rrms == 0.0)
@@ -101,8 +112,8 @@ void ampsci(const IO::InputBlock &input) {
           : input.get<std::string>({"Nucleus"}, "type", "Fermi");
 
   // Create wavefunction object
-  Wavefunction wf({num_points, r0, rmax, b, grid_type, du_tmp},
-                  {atom_Z, atom_A, nuc_type, rrms, skint}, var_alpha);
+  Wavefunction wf({num_points, r0, rmax, b, grid_type, du},
+                  {atom_Z, atom_A, nuc_type, rrms, t_skin}, var_alpha);
 
   std::cout << "\nRunning for " << wf.atom() << "\n"
             << wf.nuclearParams() << "\n"
@@ -110,17 +121,14 @@ void ampsci(const IO::InputBlock &input) {
             << "********************************************************\n";
 
   // Parse input for HF method
-  input_ok =
-      input_ok &&
-      input.check2(
-          {"HartreeFock"},
-          {{"core", "Core configuration. e.g., [Xe] for Cs"},
-           {"valence", "Which valence states? e.g., 7sp5d"},
-           {"convergence", "HF convergance goal, 1e-12"},
-           {"method", "HartreeFock(default), Hartree, KohnSham"},
-           {"Breit",
-            "Scale for Breit. 0.0 default (no Breit), 1.0 include Breit"},
-           {"sortOutput", "Sort energy tables by energy? (default=false)"}});
+  input_ok &= input.check2(
+      {"HartreeFock"},
+      {{"core", "Core configuration. e.g., [Xe] for Cs"},
+       {"valence", "Which valence states? e.g., 7sp5d"},
+       {"convergence", "HF convergance goal, 1e-12"},
+       {"method", "HartreeFock(default), Hartree, KohnSham"},
+       {"Breit", "Scale for Breit. 0.0 default (no Breit), 1.0 include Breit"},
+       {"sortOutput", "Sort energy tables by energy? (default=false)"}});
 
   if (!input_ok) {
     std::cout
@@ -158,30 +166,33 @@ void ampsci(const IO::InputBlock &input) {
   // Inlcude QED radiatve potential
   const auto qed_ok = input.check2(
       {"RadPot"},
-      {{"RadPot", "Include Radiative potential? true/false"},
-       {"Simple", "Scale for 'simple' potential: default = 0"},
+      {// {"RadPot", "Include Radiative potential? true/false"},
+       // {"Simple", "Scale for 'simple' potential: default = 0"},
        {"Ueh", " for Uehling typical [0.0, 1.0], Default = 1"},
        {"SE_h", " for self-energy high-freq electric. Default = 1"},
        {"SE_l", " for self-energy low-freq electric. Default = 1"},
        {"SE_m", " self-energy magnetic. Default = 1"},
+       {"WK", " Wickman-Kroll. Default = 0"},
        {"rcut", "Maximum r to calculate Rad Pot (~5)"},
        {"scale_rN", "Nuclear size. 0 for pointlike, 1 for typical"},
        {"scale_l", "Extra scaling factor for each l e.g., (1,1,1)"},
        {"core_qed", "Include rad pot into core Hartree-Fock (default=true)"}});
-  const auto include_qed = input.get({"RadPot"}, "RadPot", false);
-  const auto x_Simple = input.get({"RadPot"}, "Simple", 0.0);
-  const auto xrp_dflt = (include_qed && x_Simple == 0.0) ? 1.0 : 0.0;
-  const auto x_Ueh = input.get({"RadPot"}, "Ueh", xrp_dflt);
-  const auto x_SEe_h = input.get({"RadPot"}, "SE_h", xrp_dflt);
-  const auto x_SEe_l = input.get({"RadPot"}, "SE_l", xrp_dflt);
-  const auto x_SEm = input.get({"RadPot"}, "SE_m", xrp_dflt);
+  // const auto include_qed = input.get({"RadPot"}, "RadPot", false);
+
+  const auto include_qed = input.getBlock("RadPot") != std::nullopt;
+  // const auto x_Simple = input.get({"RadPot"}, "Simple", 0.0);
+  const auto x_Ueh = input.get({"RadPot"}, "Ueh", 1.0);
+  const auto x_SEe_h = input.get({"RadPot"}, "SE_h", 1.0);
+  const auto x_SEe_l = input.get({"RadPot"}, "SE_l", 1.0);
+  const auto x_SEm = input.get({"RadPot"}, "SE_m", 1.0);
+  const auto x_wk = input.get({"RadPot"}, "WK", 0.0);
   const auto rcut = input.get({"RadPot"}, "rcut", 5.0);
   const auto scale_rN = input.get({"RadPot"}, "scale_rN", 1.0);
   const auto x_spd = input.get({"RadPot"}, "scale_l", std::vector{1.0});
   const bool core_qed = input.get({"RadPot"}, "core_qed", true);
 
   if (include_qed && qed_ok && core_qed) {
-    wf.radiativePotential(x_Simple, x_Ueh, x_SEe_h, x_SEe_l, x_SEm, rcut,
+    wf.radiativePotential({x_Ueh, x_SEe_h, x_SEe_l, x_SEm, x_wk}, rcut,
                           scale_rN, x_spd);
     std::cout << "Including QED into Hartree-Fock core (and valence)\n\n";
   }
@@ -215,7 +226,7 @@ void ampsci(const IO::InputBlock &input) {
   }
 
   if (include_qed && qed_ok && !core_qed) {
-    wf.radiativePotential(x_Simple, x_Ueh, x_SEe_h, x_SEe_l, x_SEm, rcut,
+    wf.radiativePotential({x_Ueh, x_SEe_h, x_SEe_l, x_SEm, x_wk}, rcut,
                           scale_rN, x_spd);
     std::cout << "Including QED into Valence only\n\n";
   }

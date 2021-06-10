@@ -9,7 +9,7 @@
 #include "MBPT/CorrelationPotential.hpp"
 #include "Maths/Grid.hpp"
 #include "Physics/Parametric_potentials.hpp"
-#include "Physics/RadiativePotential.hpp"
+#include "Physics/RadPot.hpp"
 #include "Wavefunction/DiracSpinor.hpp"
 #include "Wavefunction/Wavefunction.hpp"
 #include "qip/Vector.hpp"
@@ -37,14 +37,25 @@ Method parseMethod(const std::string &in_method) {
   return Method::HartreeFock;
 }
 
+std::string parseMethod(const Method &in_method) {
+  if (in_method == Method::HartreeFock)
+    return "HartreeFock";
+  if (in_method == Method::ApproxHF)
+    return "ApproxHF";
+  if (in_method == Method::Hartree)
+    return "Hartree";
+  if (in_method == Method::KohnSham)
+    return "KohnSham";
+  return "HartreeFock";
+}
+
 //******************************************************************************
 //******************************************************************************
 HartreeFock::HartreeFock(std::shared_ptr<const Grid> in_grid,
                          const std::vector<double> &in_vnuc,
                          std::vector<DiracSpinor> *in_core,
-                         const RadiativePotential::Vrad *const in_vrad,
-                         double in_alpha, Method method, double x_Breit,
-                         double in_eps)
+                         const QED::RadPot *const in_vrad, double in_alpha,
+                         Method method, double x_Breit, double in_eps)
     : rgrid(in_grid),
       p_vnuc(&in_vnuc), // or, just have a copy?
       p_vrad(in_vrad),
@@ -62,8 +73,8 @@ HartreeFock::HartreeFock(std::shared_ptr<const Grid> in_grid,
 //------------------------------------------------------------------------------
 HartreeFock::HartreeFock(Wavefunction *wf, Method method, double x_Breit,
                          double eps)
-    : HartreeFock(wf->rgrid, wf->vnuc, &wf->core, &wf->vrad, wf->alpha, method,
-                  x_Breit, eps) {}
+    : HartreeFock(wf->rgrid, wf->vnuc, &wf->core, wf->qed.get(), wf->alpha,
+                  method, x_Breit, eps) {}
 
 //******************************************************************************
 const std::vector<double> &HartreeFock::solveCore() {
@@ -924,12 +935,14 @@ void HartreeFock::brueckner_orbital(DiracSpinor &Fa, double en,
 }
 
 //******************************************************************************
-const std::vector<double> tmp_empty_vector{};
-const std::vector<double> &HartreeFock::get_Hrad_el(int l) const {
-  return p_vrad ? p_vrad->get_Hel(l) : tmp_empty_vector;
+// const std::vector<double> tmp_empty_vector{};
+std::vector<double> HartreeFock::get_Hrad_el(int l) const {
+  // return p_vrad ? p_vrad->get_Hel(l) : tmp_empty_vector;
+  return p_vrad ? p_vrad->Vel(l) : std::vector<double>{};
 }
-const std::vector<double> &HartreeFock::get_Hrad_mag(int l) const {
-  return p_vrad ? p_vrad->get_Hmag(l) : tmp_empty_vector;
+std::vector<double> HartreeFock::get_Hrad_mag(int l) const {
+  // return p_vrad ? p_vrad->get_Hmag(l) : tmp_empty_vector;
+  return p_vrad ? p_vrad->Hmag(l) : std::vector<double>{};
 }
 //******************************************************************************
 //******************************************************************************

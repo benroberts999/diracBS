@@ -5,6 +5,7 @@ This outlines/describes the input options/usage for ampsci. For a description of
 * The **ampsci** program should be run as:
   * _./ampsci inputFile.in_
   * "inputFile.in" is a plain-text input file, that contains all input options (if no input file is given, program looks for the default one, named "ampsci.in")
+* Can also be run simply by giving an atomic symbol (or Z) as command-line option, which will run a simple Hartree-Fock calculation, e.g.,: _./ampsci Cs_
 * First, the program reads in the main input options from the four main input "blocks" (Atom, Nucleus, HartreeFock, and Grid). It will use these to generate wavefunction/Hartree-Fock etc. Then, any number of optional "modules" are run using the above-calculated wavefunctions (e.g., these might calculate matrix elements, run tests etc.). The input blocks and options can be given in any order
 * In general, the input file will have the following format:
 
@@ -122,7 +123,7 @@ Grid {
   num_points; //[i] default = 1600
   type;       //[t] default = loglinear
   b;          //[r] default = rmax/3
-  fixed_du;   //[r] default = -1.
+  du;         //[r] default = blank.
 }
 ```
 * r0: grid starting point (in atomic units)
@@ -131,7 +132,7 @@ Grid {
 * type: options are: loglinear (default), logarithmic, linear
   * Note: 'linear' grid requires a _very_ large number of points to work, and should essentially never be used.
 * b: only used for loglinear grid; the grid is roughly logarithmic below this value, and linear after it. Default is 4.0 (atomic units). If b<0 or b>rmax, will revert to using a logarithmic grid
-* fixed_du: if fixed_du>0.0, it will calculate num_points to fix du (step-size in uniform 'u' grid); will over-ride 'num_points' option.
+* du: if du>0.0, it will calculate num_points to fix du (step-size in uniform 'u' grid); will over-ride 'num_points' option.
 
 
 ## dVpol (effective polarisation potential)
@@ -166,12 +167,11 @@ ExtraPotential {
 ## RadPot (Ginges/Flambaum QED Radiative Potential)
 ```cpp
 RadPot {
-  RadPot;   //[b] default = false, to include QED, set to true
-  Simple;   //[r] default = 0.0 // Vrad = -Z^2 * alpha * exp(-r/alpha)
   Ueh;      //[r] default = 1.0 // Uehling (vac pol)
   SE_h;     //[r] default = 1.0 // high-f SE
   SE_l;     //[r] default = 1.0 // low-f SE
   SE_m;     //[r] default = 1.0 // Magnetic SE
+  WK;       //[r] default = 0.0 // Wickman-Kroll
   rcut;     //[r] default = 5.0
   scale_rN; //[r] default = 1.0
   scale_l;  //[r,r...] (List) default = 1.0
@@ -179,13 +179,11 @@ RadPot {
 }
 ```
 * Adds QED radiative potential to Hamiltonian.
-* RadPot must be set to true to include QED
-* If full rad pot is used (Uehling+SE), will read write from file named Z.qed
-  * Rad pot depends only on Z. Note: scale_rN ignored if reading from file (will be whatever it was when file written; not saved)
-  * scale_l and core_qed not written to .qed file; read from input each run
-* Each factor is a scale; 0 means don't include. 1 means include full potential. Any positive number is valid.
+* QED will be included if this block is present; else not
+* Will read from file if it exists (e.g., Z_uhlmw.qed)
+* Each factor (Ueh, SE_h,..) is a scale; 0 means don't include. 1 means include full potential. Any positive number is valid.
 * rcut: Only calculates potential for r < rcut [for speed; rcut in au]
-* scale_rN: finite nucleus effects: rN = rN * scale_rN (for testing only)
+* scale_rN: finite nucleus effects: rN = rN * scale_rN (=0 means pointlike)
 * scale_l: Optional input: Scaling factors for the V_rad for each l state; for higher states, uses the last given input. Input as a list of real numbers. Best explained with examples:
     * scale_l = 1; // include QED for all states
     * scale_l = 0,1,0; //include QED for p states only
