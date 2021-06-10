@@ -5,7 +5,6 @@
 #include "Modules/matrixElements.hpp"
 #include "Physics/NuclearPotentials.hpp"
 #include "Physics/PhysConst_constants.hpp"
-#include "Physics/RadiativePotential.hpp"
 #include "Wavefunction/DiracSpinor.hpp"
 #include "Wavefunction/Wavefunction.hpp"
 #include "qip/Format.hpp"
@@ -57,8 +56,8 @@ void QED(const IO::InputBlock &input, const Wavefunction &wf) {
 
   const auto coreQED = input.get("coreQED", true);
   if (coreQED) {
-    wf_VP.radiativePotential(0.0, 1.0, 0.0, 0.0, 0.0, 5.0, scale_rN, x_spd);
-    wf_SE.radiativePotential(0.0, 0.0, 1.0, 1.0, 1.0, 5.0, scale_rN, x_spd);
+    wf_VP.radiativePotential({1.0, 0.0, 0.0, 0.0, 0.0}, 15.0, scale_rN, x_spd);
+    wf_SE.radiativePotential({0.0, 1.0, 1.0, 1.0, 0.0}, 15.0, scale_rN, x_spd);
   }
 
   // Do Hartree-Fock on new wavefunctions
@@ -73,9 +72,9 @@ void QED(const IO::InputBlock &input, const Wavefunction &wf) {
                         wf.coreConfiguration());
 
   if (!coreQED) {
-    // no core QED; add QED _after_ core HartreeFock
-    wf_VP.radiativePotential(0.0, 1.0, 0.0, 0.0, 0.0, 5.0, scale_rN, x_spd);
-    wf_SE.radiativePotential(0.0, 0.0, 1.0, 1.0, 1.0, 5.0, scale_rN, x_spd);
+    std::cout << "no core QED; add QED _after_ core HartreeFock\n";
+    wf_VP.radiativePotential({1.0, 0.0, 0.0, 0.0, 0.0}, 15.0, scale_rN, x_spd);
+    wf_SE.radiativePotential({0.0, 1.0, 1.0, 1.0, 0.0}, 15.0, scale_rN, x_spd);
   }
 
   // Copy correlation potential to new wfs
@@ -183,7 +182,8 @@ void QED(const IO::InputBlock &input, const Wavefunction &wf) {
     for (const auto &[a, b, x0, dv1, dv] : me0) {
       // find corresponding ME calculations in list:
       // (can't assume order will be the same, though usually will be)
-      auto l = [a, b](auto e) { return (a == e.a && b == e.b); };
+      auto l = [a = a, b = b](auto e) { return (a == e.a && b == e.b); };
+      // nb: a=a here due to clang error capturing bindings...
       const auto vp = std::find_if(begin(mevp), end(mevp), l);
       const auto se = std::find_if(begin(mese), end(mese), l);
       if (vp != mevp.end() && se != mese.end()) {
@@ -259,13 +259,14 @@ void QED(const IO::InputBlock &input, const Wavefunction &wf) {
       for (const auto &[a, b, x0, dv1, dv] : me0) {
         // find corresponding ME calculations in list:
         // (can't assume order will be the same, though usually will be)
-        auto l = [a, b](auto e) { return (a == e.a && b == e.b); };
+        auto l = [a = a, b = b](auto e) { return (a == e.a && b == e.b); };
+        // nb: a=a here due to clang error capturing bindings...
         const auto vp = std::find_if(begin(vx_vp), end(vx_vp), l);
         const auto se = std::find_if(begin(vx_se), end(vx_se), l);
 
         const auto Fa =
             std::find_if(begin(wf.valence), end(wf.valence),
-                         [=](auto &x) { return x.shortSymbol() == a; });
+                         [a = a](auto &x) { return x.shortSymbol() == a; });
 
         auto Aconst = DiracOperator::HyperfineA::convertRMEtoA(*Fa, *Fa);
 
@@ -282,7 +283,7 @@ void QED(const IO::InputBlock &input, const Wavefunction &wf) {
     }
 
   } // me_input
-}
+} // namespace Module
 
 //****************************************************************************
 
