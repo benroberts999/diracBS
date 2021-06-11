@@ -79,10 +79,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adf92345591b8ed9613784b7bc2981ffd"><td class="memItemLeft" align="right" valign="top"><a id="adf92345591b8ed9613784b7bc2981ffd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHF_1_1HartreeFock.html#adf92345591b8ed9613784b7bc2981ffd">HartreeFock</a> (std::shared_ptr&lt; const <a class="el" href="classGrid.html">Grid</a> &gt;, const std::vector&lt; double &gt; &amp;in_vnuc, std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &gt; *in_core, const <a class="el" href="classRadiativePotential_1_1Vrad.html">RadiativePotential::Vrad</a> *const in_vrad=nullptr, double m_alpha=<a class="el" href="namespacePhysConst.html#a55902d21a45f0deca899be0c26404187">PhysConst::alpha</a>, Method method=Method::HartreeFock, double x_Breit=0.0, double eps_HF=0.0)</td></tr>
-<tr class="memdesc:adf92345591b8ed9613784b7bc2981ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method is enum class, eps_HF is convergence goal. <br /></td></tr>
-<tr class="separator:adf92345591b8ed9613784b7bc2981ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a3d56eaa3a37ef562f7ec9917ed15bb"><td class="memItemLeft" align="right" valign="top"><a id="a4a3d56eaa3a37ef562f7ec9917ed15bb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHF_1_1HartreeFock.html#a4a3d56eaa3a37ef562f7ec9917ed15bb">HartreeFock</a> (std::shared_ptr&lt; const <a class="el" href="classGrid.html">Grid</a> &gt;, const std::vector&lt; double &gt; &amp;in_vnuc, std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &gt; *in_core, const <a class="el" href="classQED_1_1RadPot.html">QED::RadPot</a> *const in_vrad=nullptr, double m_alpha=<a class="el" href="namespacePhysConst.html#a55902d21a45f0deca899be0c26404187">PhysConst::alpha</a>, Method method=Method::HartreeFock, double x_Breit=0.0, double eps_HF=0.0)</td></tr>
+<tr class="memdesc:a4a3d56eaa3a37ef562f7ec9917ed15bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method is enum class, eps_HF is convergence goal. <br /></td></tr>
+<tr class="separator:a4a3d56eaa3a37ef562f7ec9917ed15bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a541c73462f22e9e6505cf8c5ca95f15f"><td class="memItemLeft" align="right" valign="top"><a id="a541c73462f22e9e6505cf8c5ca95f15f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>HartreeFock</b> (<a class="el" href="classWavefunction.html">Wavefunction</a> *wf, Method method=Method::HartreeFock, double x_Breit=0.0, double eps_HF=0.0)</td></tr>
 <tr class="separator:a541c73462f22e9e6505cf8c5ca95f15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,12 +131,12 @@ std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 <tr class="memitem:ae2a4fd4dbd26e10904853f352fb45a84"><td class="memItemLeft" align="right" valign="top"><a id="ae2a4fd4dbd26e10904853f352fb45a84"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>num_core_electrons</b> () const</td></tr>
 <tr class="separator:ae2a4fd4dbd26e10904853f352fb45a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0101ceb0ac468dbce5f8cfd0bd8a4544"><td class="memItemLeft" align="right" valign="top"><a id="a0101ceb0ac468dbce5f8cfd0bd8a4544"></a>
-const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hrad_el</b> (int l) const</td></tr>
-<tr class="separator:a0101ceb0ac468dbce5f8cfd0bd8a4544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5ff2154a5a95a8ac50d215f7bc1db22"><td class="memItemLeft" align="right" valign="top"><a id="ae5ff2154a5a95a8ac50d215f7bc1db22"></a>
-const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hrad_mag</b> (int l) const</td></tr>
-<tr class="separator:ae5ff2154a5a95a8ac50d215f7bc1db22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dabd0e69666d6ef572652ed31c5bc81"><td class="memItemLeft" align="right" valign="top"><a id="a1dabd0e69666d6ef572652ed31c5bc81"></a>
+std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hrad_el</b> (int l) const</td></tr>
+<tr class="separator:a1dabd0e69666d6ef572652ed31c5bc81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa25731661ff6f5c31ae4a27586e4f5e"><td class="memItemLeft" align="right" valign="top"><a id="afa25731661ff6f5c31ae4a27586e4f5e"></a>
+std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hrad_mag</b> (int l) const</td></tr>
+<tr class="separator:afa25731661ff6f5c31ae4a27586e4f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b0f46cdcda5ec1b09c6d28ac92406d"><td class="memItemLeft" align="right" valign="top"><a id="a96b0f46cdcda5ec1b09c6d28ac92406d"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>get_alpha</b> () const</td></tr>
 <tr class="separator:a96b0f46cdcda5ec1b09c6d28ac92406d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +146,15 @@ const std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a>
 <tr class="memitem:a18e3eeda63d6f8f5dd1f001cc520c06f"><td class="memItemLeft" align="right" valign="top"><a id="a18e3eeda63d6f8f5dd1f001cc520c06f"></a>
 const <a class="el" href="classHF_1_1Breit.html">HF::Breit</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_Breit</b> () const</td></tr>
 <tr class="separator:a18e3eeda63d6f8f5dd1f001cc520c06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153f87cea415cb7270627ad24220d750"><td class="memItemLeft" align="right" valign="top"><a id="a153f87cea415cb7270627ad24220d750"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>x_Breit</b> () const</td></tr>
+<tr class="separator:a153f87cea415cb7270627ad24220d750"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee82c1b6a1cb08d5f46e30abc90cd55e"><td class="memItemLeft" align="right" valign="top"><a id="aee82c1b6a1cb08d5f46e30abc90cd55e"></a>
 <a class="el" href="classDiracSpinor.html">DiracSpinor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>VBr</b> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fv) const</td></tr>
 <tr class="separator:aee82c1b6a1cb08d5f46e30abc90cd55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa061bfa46ad6f718117e843908719cf9"><td class="memItemLeft" align="right" valign="top"><a id="aa061bfa46ad6f718117e843908719cf9"></a>
+Method&#160;</td><td class="memItemRight" valign="bottom"><b>method</b> () const</td></tr>
+<tr class="separator:aa061bfa46ad6f718117e843908719cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cdcece97255762179463dff21217df3"><td class="memItemLeft" align="right" valign="top"><a id="a6cdcece97255762179463dff21217df3"></a>
 <a class="el" href="classHF_1_1HartreeFock.html">HartreeFock</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classHF_1_1HartreeFock.html">HartreeFock</a> &amp;)=delete</td></tr>
 <tr class="separator:a6cdcece97255762179463dff21217df3"><td class="memSeparator" colspan="2">&#160;</td></tr>

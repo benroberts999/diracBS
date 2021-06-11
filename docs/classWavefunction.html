@@ -222,10 +222,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#a06dc0029ecd5bf449db3dc85782687ed">SOEnergyShift</a> ()</td></tr>
 <tr class="memdesc:a06dc0029ecd5bf449db3dc85782687ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second-order <a class="el" href="namespaceMBPT.html" title="Many-body perturbation theory. ">MBPT</a> energy shifts, calculates + prints. <br /></td></tr>
 <tr class="separator:a06dc0029ecd5bf449db3dc85782687ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae502bffea2e5beb47699501668c65570"><td class="memItemLeft" align="right" valign="top"><a id="ae502bffea2e5beb47699501668c65570"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#ae502bffea2e5beb47699501668c65570">radiativePotential</a> (double x_simple, double x_Ueh, double x_SEe_h, double x_SEe_l, double x_SEm, double rcut, double scale_rN, const std::vector&lt; double &gt; &amp;x_spd, bool do_readwrite=true)</td></tr>
-<tr class="memdesc:ae502bffea2e5beb47699501668c65570"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates radiative potential. Stores in vnuc, and Hmag. <br /></td></tr>
-<tr class="separator:ae502bffea2e5beb47699501668c65570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e94127825119943d41752e0ab1d3603"><td class="memItemLeft" align="right" valign="top"><a id="a6e94127825119943d41752e0ab1d3603"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#a6e94127825119943d41752e0ab1d3603">radiativePotential</a> (<a class="el" href="structQED_1_1RadPot_1_1Scale.html">QED::RadPot::Scale</a> s, double rcut, double scale_rN, const std::vector&lt; double &gt; &amp;x_spd, bool do_readwrite=true, bool print=true)</td></tr>
+<tr class="memdesc:a6e94127825119943d41752e0ab1d3603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates radiative potential. Stores in vnuc, and Hmag. <br /></td></tr>
+<tr class="separator:a6e94127825119943d41752e0ab1d3603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10b4000c0b43b5437b9cb7acae829c90"><td class="memItemLeft" align="right" valign="top"><a id="a10b4000c0b43b5437b9cb7acae829c90"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#a10b4000c0b43b5437b9cb7acae829c90">formBasis</a> (const SplineBasis::Parameters &amp;params)</td></tr>
 <tr class="memdesc:a10b4000c0b43b5437b9cb7acae829c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates + populates basis [see BSplineBasis]. <br /></td></tr>
@@ -271,9 +271,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#ae0d782608856812b81742c96dc1611d1">get_Vlocal</a> (int l=0) const</td></tr>
 <tr class="memdesc:ae0d782608856812b81742c96dc1611d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Local potential, e.g., Vl = Vnuc + Vdir + Vrad_el(l) - can be l-dependent. <br /></td></tr>
 <tr class="separator:ae0d782608856812b81742c96dc1611d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c500c39c8ed2e6febe8066ffcaf4b18"><td class="memItemLeft" align="right" valign="top"><a id="a6c500c39c8ed2e6febe8066ffcaf4b18"></a>
-const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hmag</b> (int l=0) const</td></tr>
-<tr class="separator:a6c500c39c8ed2e6febe8066ffcaf4b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015b55c31d504637696ba5d38810b319"><td class="memItemLeft" align="right" valign="top"><a id="a015b55c31d504637696ba5d38810b319"></a>
+std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_Hmag</b> (int l=0) const</td></tr>
+<tr class="separator:a015b55c31d504637696ba5d38810b319"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -323,10 +323,10 @@ std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#a8ea877d1c943977e5ca769dc48281029">vdir</a> {}</td></tr>
 <tr class="memdesc:a8ea877d1c943977e5ca769dc48281029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direct/local part of the electron potential. <br /></td></tr>
 <tr class="separator:a8ea877d1c943977e5ca769dc48281029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc4093a4d3c9b46968aa7f51ffa34736"><td class="memItemLeft" align="right" valign="top"><a id="abc4093a4d3c9b46968aa7f51ffa34736"></a>
-<a class="el" href="classRadiativePotential_1_1Vrad.html">RadiativePotential::Vrad</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#abc4093a4d3c9b46968aa7f51ffa34736">vrad</a> {}</td></tr>
-<tr class="memdesc:abc4093a4d3c9b46968aa7f51ffa34736"><td class="mdescLeft">&#160;</td><td class="mdescRight">QED radiative potential. <br /></td></tr>
-<tr class="separator:abc4093a4d3c9b46968aa7f51ffa34736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab20f658c4312c56a7193ff8e62d5c41e"><td class="memItemLeft" align="right" valign="top"><a id="ab20f658c4312c56a7193ff8e62d5c41e"></a>
+std::unique_ptr&lt; <a class="el" href="classQED_1_1RadPot.html">QED::RadPot</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classWavefunction.html#ab20f658c4312c56a7193ff8e62d5c41e">qed</a> {nullptr}</td></tr>
+<tr class="memdesc:ab20f658c4312c56a7193ff8e62d5c41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">QED radiative potential. <br /></td></tr>
+<tr class="separator:ab20f658c4312c56a7193ff8e62d5c41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Stores <a class="el" href="classWavefunction.html" title="Stores Wavefunction (set of core+valence orbitals, grid etc.) ">Wavefunction</a> (set of core+valence orbitals, grid etc.) </p>

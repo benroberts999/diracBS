@@ -81,10 +81,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a72ae10abe64e1a59cb996348a6625c57"><td class="memItemLeft" align="right" valign="top"><a id="a72ae10abe64e1a59cb996348a6625c57"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a72ae10abe64e1a59cb996348a6625c57">solve_core</a> (const double omega, int max_its=100, const bool print=true)=0</td></tr>
-<tr class="memdesc:a72ae10abe64e1a59cb996348a6625c57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve RPA equations (for whichever method) for core. <br /></td></tr>
-<tr class="separator:a72ae10abe64e1a59cb996348a6625c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1be05f45b43df2a833685a06b698e4e4"><td class="memItemLeft" align="right" valign="top"><a id="a1be05f45b43df2a833685a06b698e4e4"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a1be05f45b43df2a833685a06b698e4e4">get_eps</a> () const</td></tr>
 <tr class="memdesc:a1be05f45b43df2a833685a06b698e4e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns eps (convergance) of last solve_core run. <br /></td></tr>
@@ -102,6 +98,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>get_parity</b> () cons
 <tr class="memitem:aa890792eeeca937e1dd9c1663b8935e7"><td class="memItemLeft" align="right" valign="top"><a id="aa890792eeeca937e1dd9c1663b8935e7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_imagQ</b> () const</td></tr>
 <tr class="separator:aa890792eeeca937e1dd9c1663b8935e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ae10abe64e1a59cb996348a6625c57"><td class="memItemLeft" align="right" valign="top"><a id="a72ae10abe64e1a59cb996348a6625c57"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a72ae10abe64e1a59cb996348a6625c57">solve_core</a> (const double omega, int max_its=100, const bool print=true)=0</td></tr>
+<tr class="memdesc:a72ae10abe64e1a59cb996348a6625c57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve RPA equations (for whichever method) for core. <br /></td></tr>
+<tr class="separator:a72ae10abe64e1a59cb996348a6625c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02214c1da138b08534bc19d4bc7ee00a"><td class="memItemLeft" align="right" valign="top"><a id="a02214c1da138b08534bc19d4bc7ee00a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a02214c1da138b08534bc19d4bc7ee00a">clear</a> ()=0</td></tr>
 <tr class="memdesc:a02214c1da138b08534bc19d4bc7ee00a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dPsi orbitals (sets to zero) <br /></td></tr>
@@ -110,6 +110,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a0f8e0c12db304a24516e5fe110b0cbc3">dV</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fn, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fm) const =0</td></tr>
 <tr class="memdesc:a0f8e0c12db304a24516e5fe110b0cbc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;n||dV||m&gt; <br /></td></tr>
 <tr class="separator:a0f8e0c12db304a24516e5fe110b0cbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c625ebf5d557c94ba780c7503230c97"><td class="memItemLeft" align="right" valign="top"><a id="a9c625ebf5d557c94ba780c7503230c97"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1CorePolarisation.html#a9c625ebf5d557c94ba780c7503230c97">dV1</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fn, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fm) const =0</td></tr>
+<tr class="memdesc:a9c625ebf5d557c94ba780c7503230c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;n||dV^1||m&gt;, lowest-order only. <br /></td></tr>
+<tr class="separator:a9c625ebf5d557c94ba780c7503230c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72bf6656e73e17f4dafc2813cdf1d2f6"><td class="memItemLeft" align="right" valign="top"><a id="a72bf6656e73e17f4dafc2813cdf1d2f6"></a>
 <a class="el" href="classExternalField_1_1CorePolarisation.html">CorePolarisation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classExternalField_1_1CorePolarisation.html">CorePolarisation</a> &amp;)=delete</td></tr>
 <tr class="separator:a72bf6656e73e17f4dafc2813cdf1d2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,10 +133,10 @@ Protected Attributes</h2></td></tr>
 const <a class="el" href="classDiracOperator_1_1TensorOperator.html">DiracOperator::TensorOperator</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>m_h</b></td></tr>
 <tr class="separator:a0be1a8c9c5be2e00755e74d75ec57dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9ea16706b931d97510ae4e5db1be96f"><td class="memItemLeft" align="right" valign="top"><a id="ab9ea16706b931d97510ae4e5db1be96f"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> = 1.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> {1.0}</td></tr>
 <tr class="separator:ab9ea16706b931d97510ae4e5db1be96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285e4e371f5c3937d717308c0d859d42"><td class="memItemLeft" align="right" valign="top"><a id="a285e4e371f5c3937d717308c0d859d42"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> = 0.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> {0.0}</td></tr>
 <tr class="separator:a285e4e371f5c3937d717308c0d859d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f02736669dc63fda955f0184691e7c0"><td class="memItemLeft" align="right" valign="top"><a id="a7f02736669dc63fda955f0184691e7c0"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>m_rank</b></td></tr>

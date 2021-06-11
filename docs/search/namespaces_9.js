@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['parametric',['Parametric',['../namespaceParametric.html',1,'']]],
-  ['physconst',['PhysConst',['../namespacePhysConst.html',1,'']]]
+  ['nuclear',['Nuclear',['../namespaceNuclear.html',1,'']]],
+  ['numcalc',['NumCalc',['../namespaceNumCalc.html',1,'']]]
 ];

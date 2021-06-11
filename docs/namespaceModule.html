@@ -139,13 +139,16 @@ std::unique_ptr&lt; <a class="el" href="classDiracOperator_1_1TensorOperator.htm
 <tr class="memitem:ac17f6f9b51e3ed2ea123755f3d0d793d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModule.html#ac17f6f9b51e3ed2ea123755f3d0d793d">polarisability</a> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
 <tr class="memdesc:ac17f6f9b51e3ed2ea123755f3d0d793d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate dipole polarisabilitities (static, dynamic, alpha, vector beta)  <a href="#ac17f6f9b51e3ed2ea123755f3d0d793d">More...</a><br /></td></tr>
 <tr class="separator:ac17f6f9b51e3ed2ea123755f3d0d793d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5442873270a513f2c67c97e59c9c08d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModule.html#a5442873270a513f2c67c97e59c9c08d4">QED</a> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
+<tr class="memdesc:a5442873270a513f2c67c97e59c9c08d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates QED corrections to energies and matrix elements.  <a href="#a5442873270a513f2c67c97e59c9c08d4">More...</a><br /></td></tr>
+<tr class="separator:a5442873270a513f2c67c97e59c9c08d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ec1fcdd1f4d4d5a2181f40a411195a8"><td class="memItemLeft" align="right" valign="top"><a id="a7ec1fcdd1f4d4d5a2181f40a411195a8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>vertexQED</b> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModule.html#a7ec1fcdd1f4d4d5a2181f40a411195a8">vertexQED</a> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
+<tr class="memdesc:a7ec1fcdd1f4d4d5a2181f40a411195a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates vertex QED corrections matrix elements. <br /></td></tr>
 <tr class="separator:a7ec1fcdd1f4d4d5a2181f40a411195a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00c1c9cb65829231be602e87e51c130d"><td class="memItemLeft" align="right" valign="top"><a id="a00c1c9cb65829231be602e87e51c130d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModule.html#a00c1c9cb65829231be602e87e51c130d">hyperfine_vertex_test</a> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
-<tr class="memdesc:a00c1c9cb65829231be602e87e51c130d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for finding A and b for effective vertex QED operator. <br /></td></tr>
-<tr class="separator:a00c1c9cb65829231be602e87e51c130d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab085ca9f37f67a3238a589e063ef166d"><td class="memItemLeft" align="right" valign="top"><a id="ab085ca9f37f67a3238a589e063ef166d"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>calc_vertexQED</b> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf, const <a class="el" href="classWavefunction.html">Wavefunction</a> *wf_VP=nullptr, const <a class="el" href="classWavefunction.html">Wavefunction</a> *wf_SE=nullptr)</td></tr>
+<tr class="separator:ab085ca9f37f67a3238a589e063ef166d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a727f82801c7ef0385f23948e9efd7089"><td class="memItemLeft" align="right" valign="top"><a id="a727f82801c7ef0385f23948e9efd7089"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceModule.html#a727f82801c7ef0385f23948e9efd7089">runModules</a> (const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;input, const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;wf)</td></tr>
 <tr class="memdesc:a727f82801c7ef0385f23948e9efd7089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loops through all given modules, runs them one at a time. <br /></td></tr>
@@ -312,6 +315,37 @@ Variables</h2></td></tr>
 <li>omega_steps: Number of steps used for dynamic. default = 30. (linear scale)</li>
 </ul>
 <p>Note: transition polarisabilities written for s-states only. They might be correct for other states too, but NOT checked. Especially for beta, pretty sure it's wrong for non-s states. </p>
+
+</div>
+</div>
+<a id="a5442873270a513f2c67c97e59c9c08d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5442873270a513f2c67c97e59c9c08d4">&#9670;&nbsp;</a></span>QED()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Module::QED </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classIO_1_1InputBlock.html">IO::InputBlock</a> &amp;&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classWavefunction.html">Wavefunction</a> &amp;&#160;</td>
+          <td class="paramname"><em>wf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates QED corrections to energies and matrix elements. </p>
+<p>: Note: Should be checked against manual calc, since not 100% included </p>
 
 </div>
 </div>

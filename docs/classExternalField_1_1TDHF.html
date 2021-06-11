@@ -92,18 +92,22 @@ Public Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a42a0552f4d3e5d11c9c7e188410fef28">clear</a> () override final</td></tr>
 <tr class="memdesc:a42a0552f4d3e5d11c9c7e188410fef28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the dPsi orbitals (sets to zero) <br /></td></tr>
 <tr class="separator:a42a0552f4d3e5d11c9c7e188410fef28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff79111e66291355710219392a61fe83"><td class="memItemLeft" align="right" valign="top"><a id="aff79111e66291355710219392a61fe83"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#aff79111e66291355710219392a61fe83">dV</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb, bool conj, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> *const Fexcl=nullptr) const</td></tr>
-<tr class="memdesc:aff79111e66291355710219392a61fe83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;a||dV||b&gt; or &lt;a||dV*||b&gt;. Will exclude orbital 'Fexcl' from sum over core (for tests only) <br /></td></tr>
-<tr class="separator:aff79111e66291355710219392a61fe83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d748820fd8802323ede5059748974ac"><td class="memItemLeft" align="right" valign="top"><a id="a4d748820fd8802323ede5059748974ac"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a4d748820fd8802323ede5059748974ac">dV</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb, bool conj, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> *const Fexcl=nullptr, bool incl_dV=true) const</td></tr>
+<tr class="memdesc:a4d748820fd8802323ede5059748974ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;a||dV||b&gt; or &lt;a||dV*||b&gt;. Will exclude orbital 'Fexcl' from sum over core (for tests only) <br /></td></tr>
+<tr class="separator:a4d748820fd8802323ede5059748974ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae0fd49a98e54b07c463a1dc4649a965"><td class="memItemLeft" align="right" valign="top"><a id="aae0fd49a98e54b07c463a1dc4649a965"></a>
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#aae0fd49a98e54b07c463a1dc4649a965">dV</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb) const override final</td></tr>
 <tr class="memdesc:aae0fd49a98e54b07c463a1dc4649a965"><td class="mdescLeft">&#160;</td><td class="mdescRight">As above, but automatically determines if 'conjugate' version reuired (Based on sign of [en_a-en_b]) <br /></td></tr>
 <tr class="separator:aae0fd49a98e54b07c463a1dc4649a965"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9341a1def8816cfdb9accdd7eee0e435"><td class="memItemLeft" align="right" valign="top"><a id="a9341a1def8816cfdb9accdd7eee0e435"></a>
-<a class="el" href="classDiracSpinor.html">DiracSpinor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a9341a1def8816cfdb9accdd7eee0e435">dV_rhs</a> (const int kappa_n, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fm, bool conj=false, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> *const Fexcl=nullptr) const</td></tr>
-<tr class="memdesc:a9341a1def8816cfdb9accdd7eee0e435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns "reduced partial matrix element RHS": dV||Fb}. Note: Fa * dV_rhs(..) equiv to dV(..) <br /></td></tr>
-<tr class="separator:a9341a1def8816cfdb9accdd7eee0e435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03124d7751ed27a5479ea39a8596dd80"><td class="memItemLeft" align="right" valign="top"><a id="a03124d7751ed27a5479ea39a8596dd80"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a03124d7751ed27a5479ea39a8596dd80">dV1</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb) const override</td></tr>
+<tr class="memdesc:a03124d7751ed27a5479ea39a8596dd80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;n||dV^1||m&gt;, lowest-order only. <br /></td></tr>
+<tr class="separator:a03124d7751ed27a5479ea39a8596dd80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b6ad37475f36880f79875bbf8e9eabd"><td class="memItemLeft" align="right" valign="top"><a id="a4b6ad37475f36880f79875bbf8e9eabd"></a>
+<a class="el" href="classDiracSpinor.html">DiracSpinor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a4b6ad37475f36880f79875bbf8e9eabd">dV_rhs</a> (const int kappa_n, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fm, bool conj=false, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> *const Fexcl=nullptr, bool incl_dV=true) const</td></tr>
+<tr class="memdesc:a4b6ad37475f36880f79875bbf8e9eabd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns "reduced partial matrix element RHS": dV||Fb}. Note: Fa * dV_rhs(..) equiv to dV(..) <br /></td></tr>
+<tr class="separator:a4b6ad37475f36880f79875bbf8e9eabd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09f465025432fa55c8f6215e0d302738"><td class="memItemLeft" align="right" valign="top"><a id="a09f465025432fa55c8f6215e0d302738"></a>
 const std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a09f465025432fa55c8f6215e0d302738">get_dPsis</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fc, dPsiType XorY) const</td></tr>
 <tr class="memdesc:a09f465025432fa55c8f6215e0d302738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns const ref to dPsi orbitals for given core orbital Fc. <br /></td></tr>
@@ -112,13 +116,13 @@ const std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a>
 const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a19d1e4f4e5af729cbb41a67890c80862">get_dPsi_x</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fc, dPsiType XorY, const int kappa_x) const</td></tr>
 <tr class="memdesc:a19d1e4f4e5af729cbb41a67890c80862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns const reference to dPsi orbital of given kappa. <br /></td></tr>
 <tr class="separator:a19d1e4f4e5af729cbb41a67890c80862"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa259c1c965761e8458feab2c769f46a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDiracSpinor.html">DiracSpinor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#afa259c1c965761e8458feab2c769f46a">solve_dPsi</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fv, const double omega, dPsiType XorY, const int kappa_beta, const <a class="el" href="classMBPT_1_1CorrelationPotential.html">MBPT::CorrelationPotential</a> *const Sigma=nullptr, StateType st=StateType::ket) const</td></tr>
-<tr class="memdesc:afa259c1c965761e8458feab2c769f46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms  Psi_v for valence state Fv (including core pol.) - 1 kappa.  <a href="#afa259c1c965761e8458feab2c769f46a">More...</a><br /></td></tr>
-<tr class="separator:afa259c1c965761e8458feab2c769f46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17d5c9e8c8c18cb903d53ced2036197d"><td class="memItemLeft" align="right" valign="top"><a id="a17d5c9e8c8c18cb903d53ced2036197d"></a>
-std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a17d5c9e8c8c18cb903d53ced2036197d">solve_dPsis</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fv, const double omega, dPsiType XorY, const <a class="el" href="classMBPT_1_1CorrelationPotential.html">MBPT::CorrelationPotential</a> *const Sigma=nullptr, StateType st=StateType::ket) const</td></tr>
-<tr class="memdesc:a17d5c9e8c8c18cb903d53ced2036197d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms  Psi_v for valence state Fv for all kappas (see solve_dPsi) <br /></td></tr>
-<tr class="separator:a17d5c9e8c8c18cb903d53ced2036197d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af80223e14b2b6c56446f4d85fc9a0f3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDiracSpinor.html">DiracSpinor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#af80223e14b2b6c56446f4d85fc9a0f3c">solve_dPsi</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fv, const double omega, dPsiType XorY, const int kappa_beta, const <a class="el" href="classMBPT_1_1CorrelationPotential.html">MBPT::CorrelationPotential</a> *const Sigma=nullptr, StateType st=StateType::ket, bool incl_dV=true) const</td></tr>
+<tr class="memdesc:af80223e14b2b6c56446f4d85fc9a0f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms  Psi_v for valence state Fv (including core pol.) - 1 kappa.  <a href="#af80223e14b2b6c56446f4d85fc9a0f3c">More...</a><br /></td></tr>
+<tr class="separator:af80223e14b2b6c56446f4d85fc9a0f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f7f53c251e6cbd0e03dc1c9a06a0458"><td class="memItemLeft" align="right" valign="top"><a id="a8f7f53c251e6cbd0e03dc1c9a06a0458"></a>
+std::vector&lt; <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a8f7f53c251e6cbd0e03dc1c9a06a0458">solve_dPsis</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fv, const double omega, dPsiType XorY, const <a class="el" href="classMBPT_1_1CorrelationPotential.html">MBPT::CorrelationPotential</a> *const Sigma=nullptr, StateType st=StateType::ket, bool incl_dV=true) const</td></tr>
+<tr class="memdesc:a8f7f53c251e6cbd0e03dc1c9a06a0458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forms  Psi_v for valence state Fv for all kappas (see solve_dPsi) <br /></td></tr>
+<tr class="separator:a8f7f53c251e6cbd0e03dc1c9a06a0458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452fb4d3a25bfc8ac67ce211479686fc"><td class="memItemLeft" align="right" valign="top"><a id="a452fb4d3a25bfc8ac67ce211479686fc"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1TDHF.html#a452fb4d3a25bfc8ac67ce211479686fc">print</a> (const std::string &amp;ofname=&quot;dPsi.txt&quot;) const</td></tr>
 <tr class="memdesc:a452fb4d3a25bfc8ac67ce211479686fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes dPsi (f-component) to textfile. <br /></td></tr>
@@ -182,10 +186,10 @@ const <a class="el" href="classHF_1_1Breit.html">HF::Breit</a> *const&#160;</td>
 const <a class="el" href="classDiracOperator_1_1TensorOperator.html">DiracOperator::TensorOperator</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>m_h</b></td></tr>
 <tr class="separator:a0be1a8c9c5be2e00755e74d75ec57dd1 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9ea16706b931d97510ae4e5db1be96f inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="ab9ea16706b931d97510ae4e5db1be96f"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> = 1.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> {1.0}</td></tr>
 <tr class="separator:ab9ea16706b931d97510ae4e5db1be96f inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285e4e371f5c3937d717308c0d859d42 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="a285e4e371f5c3937d717308c0d859d42"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> = 0.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> {0.0}</td></tr>
 <tr class="separator:a285e4e371f5c3937d717308c0d859d42 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f02736669dc63fda955f0184691e7c0 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="a7f02736669dc63fda955f0184691e7c0"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>m_rank</b></td></tr>
@@ -264,8 +268,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="afa259c1c965761e8458feab2c769f46a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa259c1c965761e8458feab2c769f46a">&#9670;&nbsp;</a></span>solve_dPsi()</h2>
+<a id="af80223e14b2b6c56446f4d85fc9a0f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80223e14b2b6c56446f4d85fc9a0f3c">&#9670;&nbsp;</a></span>solve_dPsi()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,7 +308,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">StateType&#160;</td>
-          <td class="paramname"><em>st</em> = <code>StateType::ket</code>&#160;</td>
+          <td class="paramname"><em>st</em> = <code>StateType::ket</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>incl_dV</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

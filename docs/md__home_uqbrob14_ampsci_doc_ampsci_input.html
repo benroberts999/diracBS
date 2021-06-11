@@ -69,6 +69,7 @@ $(function() {
 <li>"inputFile.in" is a plain-text input file, that contains all input options (if no input file is given, program looks for the default one, named "ampsci.in")</li>
 </ul>
 </li>
+<li>Can also be run simply by giving an atomic symbol (or Z) as command-line option, which will run a simple Hartree-Fock calculation, e.g.,: _./ampsci Cs_</li>
 <li>First, the program reads in the main input options from the four main input "blocks" (Atom, Nucleus, HartreeFock, and <a class="el" href="classGrid.html" title="Holds grid, including type + Jacobian (dr/du) ">Grid</a>). It will use these to generate wavefunction/Hartree-Fock etc. Then, any number of optional "modules" are run using the above-calculated wavefunctions (e.g., these might calculate matrix elements, run tests etc.). The input blocks and options can be given in any order</li>
 <li>In general, the input file will have the following format:</li>
 </ul>
@@ -78,7 +79,7 @@ $(function() {
 <li>Uses c++ style comments. Any commented-out line will not be read. White-space is ignored.</li>
 <li>For example, the following inputs are all equivalent</li>
 </ul>
-<div class="fragment"><div class="line">Atom {</div><div class="line">  Z = Cs;</div><div class="line">  A;</div><div class="line">}</div><div class="line">Atom {</div><div class="line">  Z = Cs;</div><div class="line"><span class="comment">//  A;</span></div><div class="line">}</div><div class="line">Atom { Z = Cs; }</div><div class="line">Atom { Z = 55; A = 133; }</div><div class="line">Atom{Z=Cs;A=<span class="keywordflow">default</span>;}</div></div><!-- fragment --><ul>
+<div class="fragment"><div class="line">Atom {</div><div class="line">  Z = Cs;</div><div class="line">  <a class="code" href="namespaceFGRP_1_1Fit.html#ae69d8fcc58a4bfa39180b565db2c129f">A</a>;</div><div class="line">}</div><div class="line">Atom {</div><div class="line">  Z = Cs;</div><div class="line"><span class="comment">//  A;</span></div><div class="line">}</div><div class="line">Atom { Z = Cs; }</div><div class="line">Atom { Z = 55; <a class="code" href="namespaceFGRP_1_1Fit.html#ae69d8fcc58a4bfa39180b565db2c129f">A</a> = 133; }</div><div class="line">Atom{Z=Cs;<a class="code" href="namespaceFGRP_1_1Fit.html#ae69d8fcc58a4bfa39180b565db2c129f">A</a>=<span class="keywordflow">default</span>;}</div></div><!-- fragment --><ul>
 <li>All available inputs for each input block are listed below<ul>
 <li>Inputs are taken in as either text, boolean (true/false), integers, or real numbers, or a "sub-block"</li>
 <li>These will be denoted by [t], [b], [i], [r], [sub-block]</li>
@@ -93,7 +94,7 @@ $(function() {
 <hr/>
  <h1>Each input block:</h1>
 <h2>Atom</h2>
-<div class="fragment"><div class="line">Atom {</div><div class="line">  Z = Cs;    <span class="comment">//[t/i] required</span></div><div class="line">  A;         <span class="comment">//[i] Will look-up default value if default</span></div><div class="line">  varAlpha2; <span class="comment">//[r] default = 1</span></div><div class="line">}</div></div><!-- fragment --><ul>
+<div class="fragment"><div class="line">Atom {</div><div class="line">  Z = Cs;    <span class="comment">//[t/i] required</span></div><div class="line">  <a class="code" href="namespaceFGRP_1_1Fit.html#ae69d8fcc58a4bfa39180b565db2c129f">A</a>;         <span class="comment">//[i] Will look-up default value if default</span></div><div class="line">  varAlpha2; <span class="comment">//[r] default = 1</span></div><div class="line">}</div></div><!-- fragment --><ul>
 <li>Z: Which atom. Can enter as symbol (e.g., Z = Cs;) or integer (e.g., Z = 55;). Required (no default)</li>
 <li>A: nuclear mass number. Leave blank to look up default value</li>
 <li>varAlpha2: Scaling factor for alpha^2 (c = 1/alpha in atomic units): alpha^2 = varAlpha2 * alpha_real^2.<ul>
@@ -147,7 +148,7 @@ $(function() {
 </ul>
 </li>
 </ul>
-<p>## <a class="el" href="classGrid.html" title="Holds grid, including type + Jacobian (dr/du) ">Grid</a> </p><div class="fragment"><div class="line"><a class="code" href="classGrid.html">Grid</a> {</div><div class="line">  r0;         <span class="comment">//[r] default = 1.0e-6</span></div><div class="line">  rmax;       <span class="comment">//[r] default = 120.0</span></div><div class="line">  num_points; <span class="comment">//[i] default = 1600</span></div><div class="line">  type;       <span class="comment">//[t] default = loglinear</span></div><div class="line">  b;          <span class="comment">//[r] default = rmax/3</span></div><div class="line">  fixed_du;   <span class="comment">//[r] default = -1.</span></div><div class="line">}</div></div><!-- fragment --><ul>
+<p>## <a class="el" href="classGrid.html" title="Holds grid, including type + Jacobian (dr/du) ">Grid</a> </p><div class="fragment"><div class="line"><a class="code" href="classGrid.html">Grid</a> {</div><div class="line">  r0;         <span class="comment">//[r] default = 1.0e-6</span></div><div class="line">  rmax;       <span class="comment">//[r] default = 120.0</span></div><div class="line">  num_points; <span class="comment">//[i] default = 1600</span></div><div class="line">  type;       <span class="comment">//[t] default = loglinear</span></div><div class="line">  b;          <span class="comment">//[r] default = rmax/3</span></div><div class="line">  du;         <span class="comment">//[r] default = blank.</span></div><div class="line">}</div></div><!-- fragment --><ul>
 <li>r0: grid starting point (in atomic units)</li>
 <li>rmax: Final grid point (in atomic units)</li>
 <li>num_points: number of points in the grid</li>
@@ -156,7 +157,7 @@ $(function() {
 </ul>
 </li>
 <li>b: only used for loglinear grid; the grid is roughly logarithmic below this value, and linear after it. Default is 4.0 (atomic units). If b&lt;0 or b&gt;rmax, will revert to using a logarithmic grid</li>
-<li>fixed_du: if fixed_du&gt;0.0, it will calculate num_points to fix du (step-size in uniform 'u' grid); will over-ride 'num_points' option.</li>
+<li>du: if du&gt;0.0, it will calculate num_points to fix du (step-size in uniform 'u' grid); will over-ride 'num_points' option.</li>
 </ul>
 <p>## dVpol (effective polarisation potential) </p><div class="fragment"><div class="line">dVpol {</div><div class="line">  a_eff;  <span class="comment">//[r] default = 0.0, typical ~1</span></div><div class="line">  r_cut;  <span class="comment">//[r] default = 1.0</span></div><div class="line">}</div><div class="line"><span class="comment">//nb: all of these are optional, hence entire block can be omitted</span></div></div><!-- fragment --><ul>
 <li>Effective polarisation potential:</li>
@@ -169,17 +170,13 @@ $(function() {
 <li>Potential is multiplied by 'factor'</li>
 <li>May be added before or after <a class="el" href="namespaceHF.html" title="Functions and classes for Hartree-Fock. ">HF</a> (if before: added to vnuc, if after: to vdir)</li>
 </ul>
-<p>## RadPot (Ginges/Flambaum QED Radiative Potential) </p><div class="fragment"><div class="line">RadPot {</div><div class="line">  RadPot;   <span class="comment">//[b] default = false, to include QED, set to true</span></div><div class="line">  Simple;   <span class="comment">//[r] default = 0.0 // Vrad = -Z^2 * alpha * exp(-r/alpha)</span></div><div class="line">  Ueh;      <span class="comment">//[r] default = 1.0 // Uehling (vac pol)</span></div><div class="line">  SE_h;     <span class="comment">//[r] default = 1.0 // high-f SE</span></div><div class="line">  SE_l;     <span class="comment">//[r] default = 1.0 // low-f SE</span></div><div class="line">  SE_m;     <span class="comment">//[r] default = 1.0 // Magnetic SE</span></div><div class="line">  rcut;     <span class="comment">//[r] default = 5.0</span></div><div class="line">  scale_rN; <span class="comment">//[r] default = 1.0</span></div><div class="line">  scale_l;  <span class="comment">//[r,r...] (List) default = 1.0</span></div><div class="line">  core_qed; <span class="comment">//[b] default = true</span></div><div class="line">}</div></div><!-- fragment --><ul>
+<p>## RadPot (Ginges/Flambaum QED Radiative Potential) </p><div class="fragment"><div class="line">RadPot {</div><div class="line">  Ueh;      <span class="comment">//[r] default = 1.0 // Uehling (vac pol)</span></div><div class="line">  SE_h;     <span class="comment">//[r] default = 1.0 // high-f SE</span></div><div class="line">  SE_l;     <span class="comment">//[r] default = 1.0 // low-f SE</span></div><div class="line">  SE_m;     <span class="comment">//[r] default = 1.0 // Magnetic SE</span></div><div class="line">  WK;       <span class="comment">//[r] default = 0.0 // Wickman-Kroll</span></div><div class="line">  rcut;     <span class="comment">//[r] default = 5.0</span></div><div class="line">  scale_rN; <span class="comment">//[r] default = 1.0</span></div><div class="line">  scale_l;  <span class="comment">//[r,r...] (List) default = 1.0</span></div><div class="line">  core_qed; <span class="comment">//[b] default = true</span></div><div class="line">}</div></div><!-- fragment --><ul>
 <li>Adds QED radiative potential to Hamiltonian.</li>
-<li>RadPot must be set to true to include QED</li>
-<li>If full rad pot is used (Uehling+SE), will read write from file named Z.qed<ul>
-<li>Rad pot depends only on Z. Note: scale_rN ignored if reading from file (will be whatever it was when file written; not saved)</li>
-<li>scale_l and core_qed not written to .qed file; read from input each run</li>
-</ul>
-</li>
-<li>Each factor is a scale; 0 means don't include. 1 means include full potential. Any positive number is valid.</li>
+<li>QED will be included if this block is present; else not</li>
+<li>Will read from file if it exists (e.g., Z_uhlmw.qed)</li>
+<li>Each factor (Ueh, SE_h,..) is a scale; 0 means don't include. 1 means include full potential. Any positive number is valid.</li>
 <li>rcut: Only calculates potential for r &lt; rcut [for speed; rcut in au]</li>
-<li>scale_rN: finite nucleus effects: rN = rN * scale_rN (for testing only)</li>
+<li>scale_rN: finite nucleus effects: rN = rN * scale_rN (=0 means pointlike)</li>
 <li>scale_l: Optional input: Scaling factors for the V_rad for each l state; for higher states, uses the last given input. Input as a list of real numbers. Best explained with examples:<ul>
 <li>scale_l = 1; // include QED for all states</li>
 <li>scale_l = 0,1,0; //include QED for p states only</li>

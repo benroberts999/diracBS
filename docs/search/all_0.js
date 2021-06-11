@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['a',['a',['../classDiracOperator_1_1VertexQED.html#ad50dc1e62ec61b268012abe77f1e0bbd',1,'DiracOperator::VertexQED']]],
+  ['a',['a',['../classDiracOperator_1_1VertexQED.html#ad50dc1e62ec61b268012abe77f1e0bbd',1,'DiracOperator::VertexQED::a()'],['../namespaceFGRP_1_1Fit.html#ae69d8fcc58a4bfa39180b565db2c129f',1,'FGRP::Fit::A()']]],
   ['add',['add',['../classIO_1_1InputBlock.html#a2b078ca2c38302405920fcaa8f0cdc2c',1,'IO::InputBlock::add(InputBlock block, bool merge=false)'],['../classIO_1_1InputBlock.html#ac41391c0b1808726b5d9d9d0747f311e',1,'IO::InputBlock::add(Option option)'],['../classIO_1_1InputBlock.html#ae322bbceda5398a1e426076d40208193',1,'IO::InputBlock::add(const std::string &amp;string, bool merge=false)'],['../namespaceqip.html#a10e81190dc8ffc9511654919606192e0',1,'qip::add(std::vector&lt; T &gt; *first, const std::vector&lt; T &gt; &amp;second, const Args &amp;... rest)'],['../namespaceqip.html#a92e3c005369dc0c6d29a7dd70db14a50',1,'qip::add(std::vector&lt; T &gt; first, const std::vector&lt; T &gt; &amp;second, const Args &amp;... rest)']]],
   ['additivepintegral',['additivePIntegral',['../namespaceNumCalc.html#a6b3352a4e5c31fbe9611651796ee1716',1,'NumCalc']]],
   ['alpha',['alpha',['../classWavefunction.html#a07ed885c1683b5d048d3727bb27f07a9',1,'Wavefunction::alpha()'],['../namespacePhysConst.html#a55902d21a45f0deca899be0c26404187',1,'PhysConst::alpha()']]],
@@ -9,6 +9,7 @@ var searchData=
   ['approximate_5ft_5fskin',['approximate_t_skin',['../namespaceNuclear.html#a5afc8a9f1a8842d7fa9c7c02d8dd22ff',1,'Nuclear']]],
   ['atom',['atom',['../classWavefunction.html#aafd94450e44598ec2605a36b468317ba',1,'Wavefunction']]],
   ['atomdata',['AtomData',['../namespaceAtomData.html',1,'']]],
+  ['atomic_5fz',['atomic_Z',['../namespaceAtomData.html#a74cbf73701cb02fd4a94802d7a1575de',1,'AtomData::atomic_Z(const std::string &amp;at)'],['../namespaceAtomData.html#abb9173f9afc457c3613ffba9582ff2cc',1,'AtomData::atomic_Z(int z)']]],
   ['atomicsymbol',['atomicSymbol',['../classWavefunction.html#a6bfcac1486b376cd770c170f3ed96b41',1,'Wavefunction']]],
   ['ampsci',['ampsci',['../index.html',1,'']]]
 ];

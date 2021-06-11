@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['yktable',['YkTable',['../classCoulomb_1_1YkTable.html',1,'Coulomb']]]
+  ['xl',['Xl',['../structQED_1_1RadPot_1_1Xl.html',1,'QED::RadPot']]]
 ];

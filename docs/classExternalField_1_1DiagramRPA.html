@@ -98,6 +98,10 @@ virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memitem:a321c4e8444fde3905a2ee012bb135c5b"><td class="memItemLeft" align="right" valign="top"><a id="a321c4e8444fde3905a2ee012bb135c5b"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>dV_diagram</b> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb, const bool first_order=false) const</td></tr>
 <tr class="separator:a321c4e8444fde3905a2ee012bb135c5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a38b01c681d149bf475dbe32d59978"><td class="memItemLeft" align="right" valign="top"><a id="a97a38b01c681d149bf475dbe32d59978"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1DiagramRPA.html#a97a38b01c681d149bf475dbe32d59978">dV1</a> (const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fa, const <a class="el" href="classDiracSpinor.html">DiracSpinor</a> &amp;Fb) const override final</td></tr>
+<tr class="memdesc:a97a38b01c681d149bf475dbe32d59978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate reduced matrix element &lt;n||dV^1||m&gt;, lowest-order only. <br /></td></tr>
+<tr class="separator:a97a38b01c681d149bf475dbe32d59978"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b85205e89e62ee4c8b8b604444630f8"><td class="memItemLeft" align="right" valign="top"><a id="a4b85205e89e62ee4c8b8b604444630f8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExternalField_1_1DiagramRPA.html#a4b85205e89e62ee4c8b8b604444630f8">clear</a> () override final</td></tr>
 <tr class="memdesc:a4b85205e89e62ee4c8b8b604444630f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the t_am and t_ma RPA ME's [RPA ME's for hole-excited]  If a previous run failed, can clear t_am's + re-try. <br /></td></tr>
@@ -148,10 +152,10 @@ Additional Inherited Members</h2></td></tr>
 const <a class="el" href="classDiracOperator_1_1TensorOperator.html">DiracOperator::TensorOperator</a> *const&#160;</td><td class="memItemRight" valign="bottom"><b>m_h</b></td></tr>
 <tr class="separator:a0be1a8c9c5be2e00755e74d75ec57dd1 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9ea16706b931d97510ae4e5db1be96f inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="ab9ea16706b931d97510ae4e5db1be96f"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> = 1.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_eps</b> {1.0}</td></tr>
 <tr class="separator:ab9ea16706b931d97510ae4e5db1be96f inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285e4e371f5c3937d717308c0d859d42 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="a285e4e371f5c3937d717308c0d859d42"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> = 0.0</td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>m_core_omega</b> {0.0}</td></tr>
 <tr class="separator:a285e4e371f5c3937d717308c0d859d42 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f02736669dc63fda955f0184691e7c0 inherit pro_attribs_classExternalField_1_1CorePolarisation"><td class="memItemLeft" align="right" valign="top"><a id="a7f02736669dc63fda955f0184691e7c0"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>m_rank</b></td></tr>

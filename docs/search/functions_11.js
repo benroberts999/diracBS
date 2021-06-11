@@ -2,9 +2,11 @@ var searchData=
 [
   ['r0',['r0',['../classDiracSpinor.html#aa9dc9c8df47a3cfd21b30ef040c59567',1,'DiracSpinor']]],
   ['r0pinfratio',['r0pinfratio',['../classDiracSpinor.html#a60e28a589d1bcaf4f3d58e7afd42d00e',1,'DiracSpinor']]],
+  ['r_5fintegral',['r_integral',['../namespaceFGRP.html#a66f3e88eba46bcc6116ac4b9035174cf',1,'FGRP']]],
   ['radial_5frhs',['radial_rhs',['../classDiracOperator_1_1TensorOperator.html#a4de86194d90a44be2409df9896b9da7f',1,'DiracOperator::TensorOperator']]],
   ['radialintegral',['radialIntegral',['../classDiracOperator_1_1TensorOperator.html#adcac3ff73d5cbd6b4170199e2ea4c48a',1,'DiracOperator::TensorOperator']]],
-  ['radiativepotential',['radiativePotential',['../classWavefunction.html#ae502bffea2e5beb47699501668c65570',1,'Wavefunction']]],
+  ['radiativepotential',['radiativePotential',['../classWavefunction.html#a6e94127825119943d41752e0ab1d3603',1,'Wavefunction']]],
+  ['radpot',['RadPot',['../classQED_1_1RadPot.html#a3882a153d1e68682bff504fb22d11a1a',1,'QED::RadPot::RadPot()'],['../classQED_1_1RadPot.html#a9bd103fce3f149c0e5420998a2cb8981',1,'QED::RadPot::RadPot(const std::vector&lt; double &gt; &amp;r, double Z, double rN=0.0, double rcut=0.0, Scale f={1.0, 1.0, 1.0, 1.0, 0.0}, Xl xl={}, bool tprint=true, bool do_readwrite=true)']]],
   ['rampeddamp',['rampedDamp',['../namespaceHF.html#a121bb2089d2095069144fdb8bd22f2d4',1,'HF']]],
   ['readinputfile',['readInputFile',['../namespaceIO_1_1FRW.html#ad133d9b6ce9a4bd4baab7562c31fd14b',1,'IO::FRW']]],
   ['real',['real',['../classLinAlg_1_1ComplexSqMatrix.html#acbf324fa13aadf426f542b849d8c784d',1,'LinAlg::ComplexSqMatrix']]],

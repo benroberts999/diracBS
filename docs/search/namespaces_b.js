@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['radiativepotential',['RadiativePotential',['../namespaceRadiativePotential.html',1,'']]]
+  ['qip',['qip',['../namespaceqip.html',1,'']]]
 ];

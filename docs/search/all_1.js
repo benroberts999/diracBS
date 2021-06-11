@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['b',['b',['../classGrid.html#a81e61def97c161640d8679eab6a986b5',1,'Grid']]],
+  ['b',['b',['../classGrid.html#a81e61def97c161640d8679eab6a986b5',1,'Grid::b()'],['../namespaceFGRP_1_1Fit.html#a1a8d98a7c8a0b86a9a6f504eaf388625',1,'FGRP::Fit::B()']]],
   ['barn_5fm2',['barn_m2',['../namespacePhysConst.html#ad380e422f9d67b671114dfdb59fbd1e9',1,'PhysConst']]],
   ['basetype',['BaseType',['../structqip_1_1StrongType.html#afc07d3df4abd36976d843c76c5f59835',1,'qip::StrongType']]],
   ['basis',['basis',['../classWavefunction.html#a31fa0df03a87345a65d5ded908510ce9',1,'Wavefunction']]],

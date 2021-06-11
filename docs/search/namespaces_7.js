@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mbpt',['MBPT',['../namespaceMBPT.html',1,'']]],
-  ['module',['Module',['../namespaceModule.html',1,'']]]
+  ['linalg',['LinAlg',['../namespaceLinAlg.html',1,'']]]
 ];
