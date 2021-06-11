@@ -179,6 +179,7 @@ void HFAnomaly(const IO::InputBlock &input, const Wavefunction &wf) {
     }
   }
 }
+
 //******************************************************************************
 void HF_rmag(const IO::InputBlock &input, const Wavefunction &wf) {
   // For isotope 1 and 2
@@ -273,8 +274,10 @@ void HF_rmag(const IO::InputBlock &input, const Wavefunction &wf) {
   double a0_1 = h01.hfsA(F1v) + dv01;
   double a0_2 = h02.hfsA(F1v) + dv02;
 
-  auto rat_min = 1.05;
-  auto rat_max = 1.12;
+  // auto rat_min = 1.05;
+  // auto rat_max = 1.12;
+  auto rat_min = 1.065;
+  auto rat_max = 1.095;
   const auto num_steps = input.get("num_steps", 40);
   const auto dr = (rat_max - rat_min) / (num_steps - 1);
 
@@ -282,16 +285,19 @@ void HF_rmag(const IO::InputBlock &input, const Wavefunction &wf) {
   std::cout << "Rc(1) = " << rN0_au * PhysConst::aB_fm << "\n";
   std::cout << "Rc(2) = " << rN2 * PhysConst::aB_fm << "\n";
 
+  std::cout << "\nRunning for " << F1v.symbol() << "\n";
   const auto d12_targ = input.get<double>("1D2", 0.0);
   if (d12_targ != 0.0) {
-    std::cout << "\nA0(1) = " << a0_1 << "\n";
+    std::cout << "A0(1) = " << a0_1 << "\n";
     std::cout << "A0(2) = " << a0_2 << "\n";
     std::cout << "1D2 target: " << d12_targ << "\n";
     std::cout << "Rm/Rc(1) Rm/Rc(2) e1     e2     1D2    eps(D)   del(Rm/Rc)\n";
     bool done_one_yet = false;
+    std::cout << std::flush;
 
     for (double rat = rat_min; rat < rat_max + 0.5 * dr; rat += dr) {
       double rN = rat * rN0_au;
+      std::cout << std::flush;
 
       if (!done_one_yet && rN >= rN0_au) {
         // ensure we do exactly Rm/Rc = 1
@@ -481,7 +487,7 @@ void calculateBohrWeisskopf(const IO::InputBlock &input,
   // else
   //   BW_in.add("F(r)=VolotkaBW");
 
-  auto options = input.getBlock("options");
+  auto options = input.getBlock("hfs_options");
   auto sub_input = IO::InputBlock("hfs", {});
   if (options) {
     sub_input.add(options->options());
@@ -584,6 +590,71 @@ void calculateBohrWeisskopf(const IO::InputBlock &input,
           continue;
         printf("    %2i %.5f %.5f\n", m.n, n.b / m.b, n.sp / m.sp);
       }
+    }
+  }
+}
+
+//******************************************************************************
+void BW_eta_sp(const IO::InputBlock &input, const Wavefunction &wf) {
+  using namespace DiracOperator;
+
+  input.checkBlock({});
+
+  auto options = input.getBlock("options");
+  auto sub_input = IO::InputBlock("hfs", {});
+  if (options) {
+    sub_input.add(options->options());
+  }
+  // sub_input.print();
+
+  std::cout << "\nScreening: eta_sp = eps{ns}/eps{(n+1)p}\n"
+            << "\nNo RPA (mainly for H-like!)\n";
+
+  auto point_in = sub_input;
+  auto ball_in = sub_input;
+  auto BW_in = sub_input;
+
+  point_in.add("F(r)=pointlike;");
+  ball_in.add("F(r)=ball;");
+  const auto doubly_odd = (wf.Anuc() % 2 == 0);
+  if (doubly_odd)
+    BW_in.add("F(r)=doublyOddBW;");
+  else
+    BW_in.add("F(r)=VolotkaBW;");
+
+  auto hp = generateOperator(point_in, wf, false);
+  auto hb = generateOperator(ball_in, wf, false);
+  auto hw = generateOperator(BW_in, wf);
+
+  std::cout << "\n      A0(MHz)         e(ball)   e(SP)     eta(b)   eta(sp)\n";
+  for (const auto &Fs : wf.valence) {
+    if (Fs.k != -1)
+      continue;
+    auto Asp = HyperfineA::hfsA(hp.get(), Fs);
+    auto Asb = HyperfineA::hfsA(hb.get(), Fs);
+    auto Asw = HyperfineA::hfsA(hw.get(), Fs);
+
+    auto es_b = 100.0 * (Asb - Asp) / Asp;
+    auto es_w = 100.0 * (Asw - Asp) / Asp;
+
+    printf("%4s  %.7e  %7.5f  %7.5f\n", Fs.shortSymbol().c_str(), Asp, es_b,
+           es_w);
+
+    auto Fp = wf.getState(Fs.n + 1, +1);
+    if (Fp) {
+
+      auto App = HyperfineA::hfsA(hp.get(), *Fp);
+      auto Apb = HyperfineA::hfsA(hb.get(), *Fp);
+      auto Apw = HyperfineA::hfsA(hw.get(), *Fp);
+
+      auto ep_b = 100.0 * (Apb - App) / App;
+      auto ep_w = 100.0 * (Apw - App) / App;
+
+      auto eta_sp_b = es_b / ep_b;
+      auto eta_sp_w = es_w / ep_w;
+
+      printf("%4s  %.7e  %7.5f  %7.5f  %7.4f  %7.4f\n",
+             Fp->shortSymbol().c_str(), App, ep_b, ep_w, eta_sp_b, eta_sp_w);
     }
   }
 }

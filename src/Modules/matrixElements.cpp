@@ -4,13 +4,13 @@
 #include "ExternalField/DiagramRPA.hpp"
 #include "ExternalField/TDHF.hpp"
 #include "ExternalField/TDHFbasis.hpp"
+#include "ExternalField/calcMatrixElements.hpp"
 #include "IO/ChronoTimer.hpp"
 #include "IO/InputBlock.hpp"
 #include "MBPT/CorrelationPotential.hpp"
 #include "MBPT/StructureRad.hpp"
 #include "Physics/NuclearPotentials.hpp"
 #include "Physics/PhysConst_constants.hpp"
-#include "Physics/RadiativePotential.hpp"
 #include "Wavefunction/DiracSpinor.hpp"
 #include "Wavefunction/Wavefunction.hpp"
 #include "qip/Format.hpp"
@@ -25,9 +25,13 @@ namespace Module {
 
 //******************************************************************************
 void matrixElements(const IO::InputBlock &input, const Wavefunction &wf) {
-
-  input.checkBlock({"operator", "options", "rpa", "omega", "radialIntegral",
-                    "printBoth", "onlyDiagonal", "units"});
+  input.checkBlock2({{"operator", "e.g., E1, hfs"},
+                     {"options", "options specific to operator; blank by dflt"},
+                     {"rpa", "true(=TDHF), false, TDHF, basis, diagram"},
+                     {"omega", "freq. for RPA"},
+                     {"radialIntegral", "false by dflt (means red. ME)"},
+                     {"printBoth", "print <a|h|b> and <b|h|a> (dflt false)"},
+                     {"onlyDiagonal", "only <a|h|a> (dflt false)"}});
 
   const auto oper = input.get<std::string>("operator", "");
   // Get optional 'options' for operator
@@ -65,100 +69,50 @@ void matrixElements(const IO::InputBlock &input, const Wavefunction &wf) {
   if (wf.core.empty())
     rpa_method = ExternalField::method::none;
   const auto rpaQ = rpa_method != ExternalField::method::none;
-  const auto rpaDQ = rpa_method == ExternalField::method::diagram;
+  // const auto rpaDQ = rpa_method == ExternalField::method::diagram;
 
   const auto str_om = input.get<std::string>("omega", "_");
   const bool eachFreqQ = str_om == "each" || str_om == "Each";
   const auto omega = eachFreqQ ? 0.0 : input.get("omega", 0.0);
+
+  if (h->freqDependantQ) {
+    std::cout << "Frequency-dependent operator; at omega = ";
+    if (eachFreqQ)
+      std::cout << "each transition frequency\n";
+    else
+      std::cout << omega << "\n";
+  }
 
   if ((h->parity() == 1) && rpa_method == ExternalField::method::TDHF) {
     std::cout << "\n\n*CAUTION*:\n RPA (TDHF method) may not work for this "
                  "operator.\n Consider using diagram or basis method\n\n";
   }
 
-  if (h->freqDependantQ && !eachFreqQ)
-    h->updateFrequency(omega);
-
-  std::unique_ptr<ExternalField::CorePolarisation> rpa{nullptr}, rpa0{nullptr};
-  const int max_its = 100; // input?
+  std::unique_ptr<ExternalField::CorePolarisation> rpa{nullptr};
   if (rpaQ)
     std::cout << "Including RPA: ";
   if (rpa_method == ExternalField::method::TDHF) {
     std::cout << "TDHF method\n";
     rpa = std::make_unique<ExternalField::TDHF>(h.get(), wf.getHF());
-    rpa0 = std::make_unique<ExternalField::TDHF>(h.get(), wf.getHF());
-    rpa0->solve_core(omega, 1, false);
   } else if (rpa_method == ExternalField::method::basis) {
     std::cout << "TDHF/basis method\n";
     rpa = std::make_unique<ExternalField::TDHFbasis>(h.get(), wf.getHF(),
                                                      wf.basis);
-    rpa0 = std::make_unique<ExternalField::TDHFbasis>(h.get(), wf.getHF(),
-                                                      wf.basis);
-    rpa0->solve_core(omega, 1, false);
   } else if (rpa_method == ExternalField::method::diagram) {
     std::cout << "diagram method\n";
     rpa = std::make_unique<ExternalField::DiagramRPA>(h.get(), wf.basis,
                                                       wf.core, wf.identity());
   }
-  if (rpaQ && !eachFreqQ) {
-    rpa->solve_core(omega, max_its);
-  }
 
-  // Fb -> Fa = <a||h||b>
+  const auto mes = ExternalField::calcMatrixElements(
+      wf.valence, h.get(), rpa.get(), omega, eachFreqQ, diagonal_only,
+      print_both, radial_int);
+
   if (rpaQ) {
-    std::cout << "                h(0)           h(1)           h(RPA)\n";
+    std::cout << "              h(0)           h(1)           h(RPA)\n";
   }
-  for (const auto &Fb : wf.valence) {
-    for (const auto &Fa : wf.valence) {
-
-      if (h->isZero(Fa.k, Fb.k))
-        continue;
-      if (diagonal_only && Fb != Fa)
-        continue;
-      if (!print_both && Fb > Fa)
-        continue;
-      const auto ww = std::abs(Fa.en - Fb.en);
-      if (eachFreqQ && h->freqDependantQ) {
-        h->updateFrequency(ww);
-      }
-      if (eachFreqQ && rpaQ && !rpaDQ) {
-        rpa0->clear();
-        rpa0->solve_core(ww, 1, false); // wastes a little time
-      }
-      if (eachFreqQ && rpaQ) {
-        if (rpa->get_eps() > 1.0e-5)
-          rpa->clear(); // in case last one didn't work!
-        rpa->solve_core(ww);
-      }
-
-      // Special case: HFS A:
-      const auto a = AhfsQ ? DiracOperator::HyperfineA::convertRMEtoA(Fa, Fb)
-                           : radial_int ? 1.0 / h->angularF(Fa.k, Fb.k) : 1.0;
-
-      const auto symb =
-          radial_int ? h->R_symbol(Fa, Fb) + " " : h->rme_symbol(Fa, Fb);
-
-      if (!rpaQ) {
-        std::cout << symb << ": ";
-        printf("%13.6e \n", h->reducedME(Fa, Fb) * a);
-      } else if (!rpaDQ) {
-        std::cout << symb << ": ";
-        printf("%13.6e ", h->reducedME(Fa, Fb) * a);
-        auto dV = rpa->dV(Fa, Fb);
-        auto dV0 = rpa0->dV(Fa, Fb);
-        printf(" %13.6e  %13.6e\n", (h->reducedME(Fa, Fb) + dV0) * a,
-               (h->reducedME(Fa, Fb) + dV) * a);
-      } else { // RPA_diagram
-        std::cout << symb << ": ";
-        printf("%13.6e ", h->reducedME(Fa, Fb) * a);
-        auto dV = rpa->dV(Fa, Fb);
-        const auto *const rpaDptr =
-            static_cast<ExternalField::DiagramRPA *>(rpa.get());
-        auto dV0 = rpaDptr->dV_diagram(Fa, Fb, true);
-        printf(" %13.6e  %13.6e\n", (h->reducedME(Fa, Fb) + dV0) * a,
-               (h->reducedME(Fa, Fb) + dV) * a);
-      }
-    }
+  for (const auto &me : mes) {
+    std::cout << me << "\n";
   }
 }
 
@@ -166,8 +120,15 @@ void matrixElements(const IO::InputBlock &input, const Wavefunction &wf) {
 // Calculates Structure Radiation + Normalisation of States
 void structureRad(const IO::InputBlock &input, const Wavefunction &wf) {
 
-  input.checkBlock({"operator", "options", "rpa", "printBoth", "onlyDiagonal",
-                    "omega", "n_minmax", "splineLegs"});
+  input.checkBlock2(
+      {{"operator", "e.g., E1, hfs"},
+       {"options", "options specific to operator; blank by dflt"},
+       {"rpa", "true(=TDHF), false, TDHF, basis, diagram"},
+       {"omega", "freq. for RPA"},
+       {"printBoth", "print <a|h|b> and <b|h|a> (dflt false)"},
+       {"onlyDiagonal", "only <a|h|a> (dflt false)"},
+       {"n_minmax", "list; min,max n for core/excited: (1,inf)dflt"},
+       {"splineLegs", "Use splines for diagram legs (false dflt)"}});
 
   // Get input options:
   const auto oper = input.get<std::string>("operator", "E1");
@@ -644,63 +605,31 @@ generate_pnc(const IO::InputBlock &input, const Wavefunction &wf, bool) {
   return std::make_unique<PNCnsi>(c, t, *(wf.rgrid), 1.0, "iQwe-11");
 }
 
-// //------------------------------------------------------------------------------
-// std::unique_ptr<DiracOperator::TensorOperator>
-// generate_Hrad_el(const IO::InputBlock &input, const Wavefunction &wf,
-//                  bool) {
-//   using namespace DiracOperator;
-//   input.checkBlock({"Simple", "Ueh", "SE_h", "SE_l", "rcut", "scale_rN"});
-//   const auto x_Simple = input.get("Simple", 0.0);
-//   const auto x_Ueh = input.get("Ueh", 1.0);
-//   const auto x_SEe_h = input.get("SE_h", 1.0);
-//   const auto x_SEe_l = input.get("SE_l", 1.0);
-//   // const auto x_SEm = input.get("SE_m", 1.0);
-//   const auto rcut = input.get("rcut", 5.0);
-//   const auto scale_rN = input.get("scale_rN", 1.0);
-//   const auto r_rms_Fermi = scale_rN * wf.get_nuclearParameters().r_rms;
-//   const auto Hel = RadiativePotential::form_Hel(wf.rgrid->r, x_Simple, x_Ueh,
-//                                                 x_SEe_h, x_SEe_l,
-//                                                 r_rms_Fermi, wf.Znuc(),
-//                                                 wf.alpha, rcut);
-//   return std::make_unique<Hrad_el>(Hel);
-// }
-//
-// //------------------------------------------------------------------------------
-// std::unique_ptr<DiracOperator::TensorOperator>
-// generate_Hrad_mag(const IO::InputBlock &input, const Wavefunction &wf,
-//                   bool) {
-//   using namespace DiracOperator;
-//   input.checkBlock({"SE_m", "rcut", "scale_rN"});
-//   const auto x_SEm = input.get("SE_m", 1.0);
-//   const auto rcut = input.get("rcut", 50.0);
-//   const auto scale_rN = input.get("scale_rN", 1.0);
-//   const auto r_rms_Fermi = scale_rN * wf.get_nuclearParameters().r_rms;
-//   const auto Hmag = RadiativePotential::form_Hmag(
-//       wf.rgrid->r, x_SEm, r_rms_Fermi, wf.Znuc(), wf.alpha, rcut);
-//   return std::make_unique<Hrad_mag>(Hmag);
-// }
-
 //------------------------------------------------------------------------------
 std::unique_ptr<DiracOperator::TensorOperator>
-generate_Hrad(const IO::InputBlock &input, const Wavefunction &wf, bool) {
-  using namespace DiracOperator;
-  input.checkBlock(
-      {"Simple", "Ueh", "SE_h", "SE_l", "SE_m", "rcut", "scale_rN"});
-  const auto x_Simple = input.get("Simple", 0.0);
-  const auto x_Ueh = input.get("Ueh", 1.0);
-  const auto x_SEe_h = input.get("SE_h", 1.0);
-  const auto x_SEe_l = input.get("SE_l", 1.0);
-  const auto x_SEm = input.get("SE_m", 1.0);
-  const auto rcut = input.get("rcut", 5.0);
-  const auto scale_rN = input.get("scale_rN", 1.0);
-  const auto r_rms_Fermi = scale_rN * wf.get_nuclearParameters().r_rms;
-  const auto Hel = RadiativePotential::form_Hel(wf.rgrid->r, x_Simple, x_Ueh,
-                                                x_SEe_h, x_SEe_l, r_rms_Fermi,
-                                                wf.Znuc(), wf.alpha, rcut);
-  const auto Hmag = RadiativePotential::form_Hmag(
-      wf.rgrid->r, x_SEm, r_rms_Fermi, wf.Znuc(), wf.alpha, rcut);
-  return std::make_unique<Hrad>(Hel, Hmag);
-  // return std::make_unique<Hrad_el>(Hel);
+generate_Hrad(const IO::InputBlock & /*input*/, const Wavefunction & /*wf*/,
+              bool) {
+  std::cout << "\nFAIL:: generate_Hrad() need implementing!\n";
+  return nullptr;
+  // using namespace DiracOperator;
+  // input.checkBlock(
+  //     {"Simple", "Ueh", "SE_h", "SE_l", "SE_m", "rcut", "scale_rN"});
+  // const auto x_Simple = input.get("Simple", 0.0);
+  // const auto x_Ueh = input.get("Ueh", 1.0);
+  // const auto x_SEe_h = input.get("SE_h", 1.0);
+  // const auto x_SEe_l = input.get("SE_l", 1.0);
+  // const auto x_SEm = input.get("SE_m", 1.0);
+  // const auto rcut = input.get("rcut", 5.0);
+  // const auto scale_rN = input.get("scale_rN", 1.0);
+  // const auto r_rms_Fermi = scale_rN * wf.get_nuclearParameters().r_rms;
+  // const auto Hel = RadiativePotential::form_Hel(wf.rgrid->r, x_Simple, x_Ueh,
+  //                                               x_SEe_h, x_SEe_l,
+  //                                               r_rms_Fermi, wf.Znuc(),
+  //                                               wf.alpha, rcut);
+  // const auto Hmag = RadiativePotential::form_Hmag(
+  //     wf.rgrid->r, x_SEm, r_rms_Fermi, wf.Znuc(), wf.alpha, rcut);
+  // return std::make_unique<Hrad>(Hel, Hmag);
+  // // return std::make_unique<Hrad_el>(Hel);
 }
 
 //******************************************************************************

@@ -257,6 +257,8 @@ std::optional<T> InputBlock::get(std::string_view key) const {
     const auto option = std::find(m_options.crbegin(), m_options.crend(), key);
     if (option == m_options.crend())
       return std::nullopt;
+    if (option->value_str == "default" || option->value_str == "")
+      return std::nullopt;
     const auto &str = option->value_str;
     if (str == "True" || str == "true" || str == "Yes" || str == "yes" ||
         str == "1" || str == "Y" || str == "y")
@@ -286,6 +288,8 @@ InputBlock::get_vector(std::string_view key) const {
   std::vector<T> out;
   const auto option = std::find(m_options.crbegin(), m_options.crend(), key);
   if (option == m_options.crend())
+    return std::nullopt;
+  if (option->value_str == "")
     return std::nullopt;
   std::stringstream ss(option->value_str);
   while (ss.good()) {
@@ -392,6 +396,8 @@ bool InputBlock::checkBlock2(
     const auto bad_option =
         !std::any_of(list.cbegin(), list.cend(), is_optionQ);
     auto help = (option.key == "Help" || option.key == "help") ? true : false;
+    if (help)
+      print = true;
     if (bad_option && !help) {
       all_ok = false;
       std::cout << "\n⚠️  WARNING: Unclear input option in " << m_name
@@ -435,6 +441,8 @@ bool InputBlock::checkBlock(const std::vector<std::string> &list,
     const auto bad_option =
         !std::any_of(list.cbegin(), list.cend(), is_optionQ);
     auto help = (option.key == "Help" || option.key == "help") ? true : false;
+    if (help)
+      print = true;
     if (bad_option && !help) {
       all_ok = false;
       std::cout << "\n⚠️  WARNING: Unclear input option in " << m_name
