@@ -273,10 +273,10 @@ std::pair<double, double> pnc_tdhf(const DiracSpinor &Fa, const DiracSpinor &Fb,
   // note: MUST be this, not RPA w
   const auto w_SE = hpnc->imaginaryQ() ? 0.0 : (Fa.en - Fb.en);
 
-  //<yA_w|d| B> + <A |d|xB_w>
-  std::cout << "<d" << Fa.shortSymbol() << "|" << he1->name() << "|"
+  //
+  std::cout << "<" << Fa.shortSymbol() << "|" << he1->name() << "|d"
             << Fb.shortSymbol() << "> + "
-            << "<" << Fa.shortSymbol() << "|" << he1->name() << "|d"
+            << "<d" << Fa.shortSymbol() << "|" << he1->name() << "|"
             << Fb.shortSymbol() << "> ; w/ h = " << hpnc->name() << "\n";
   const auto XB = dVpnc->solve_dPsis(Fb, w_SE, ExternalField::dPsiType::X,
                                      Sigma, ExternalField::StateType::ket);
