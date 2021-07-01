@@ -520,6 +520,7 @@ double Wavefunction::enGuessCore(int n, int l) const
 double Wavefunction::enGuessVal(int n, int ka) const
 // Energy guess for valence states. Not perfect, good enough
 {
+  return -0.5 * 200.0 * m_nuclear.z * m_nuclear.z / std::pow(n, 2);
   const int maxn = maxCore_n();
   const int l = AtomData::l_k(ka);
   const int dn = n - maxn;
@@ -536,7 +537,7 @@ double Wavefunction::enGuessVal(int n, int ka) const
     neff += 2.0 * std::pow(x, 0.5);
   if (l >= 3)
     neff += 4.0 * x;
-  return -0.5 * Z_eff * Z_eff / std::pow(neff, 2);
+  return -0.5 * Z_eff * Z_eff / std::pow(neff, 2) * 200.0;
 }
 
 //******************************************************************************
@@ -617,7 +618,7 @@ void Wavefunction::printCore(bool sorted) const
   for (auto i : index_list) {
     const auto &phi = core[i];
     auto r_inf = rgrid->r[phi.pinf - 1]; // rinf(phi);
-    printf("%2i) %7s %2i  %5.1f %2i  %5.0e %15.9f %15.3f", int(i),
+    printf("%2i) %7s %2i  %5.1e %2i  %5.0e %15.9f %15.3f", int(i),
            phi.symbol().c_str(), phi.k, r_inf, phi.its, phi.eps, phi.en,
            phi.en *PhysConst::Hartree_invcm);
     if (phi.occ_frac < 1.0)
@@ -653,7 +654,7 @@ void Wavefunction::printValence(
   for (auto i : index_list) {
     const auto &phi = tmp_orbs[i];
     auto r_inf = rgrid->r[phi.pinf - 1]; // rinf(phi);
-    printf("%2i) %7s %2i  %5.1f %2i  %5.0e %15.9f %15.3f", int(i),
+    printf("%2i) %7s %2i  %5.1e %2i  %5.0e %15.9f %15.3f", int(i),
            phi.symbol().c_str(), phi.k, r_inf, phi.its, phi.eps, phi.en,
            phi.en *PhysConst::Hartree_invcm);
     printf(" %10.2f\n", (phi.en - e0) * PhysConst::Hartree_invcm);

@@ -478,6 +478,7 @@ void inwardAM(std::vector<double> &f, std::vector<double> &g,
 // Then, it then call ADAMS-MOULTON, to finish (from num_loops*AMO+1
 //   to nf = ctp-d_ctp)
 {
+  const double m_MU = 206.7682830;
   [[maybe_unused]] auto sp = IO::Profile::safeProfiler(__func__);
   // short-cuts
   const auto alpha = Hd.alpha;
@@ -491,11 +492,11 @@ void inwardAM(std::vector<double> &f, std::vector<double> &g,
   const auto c2 = 1.0 / alpha2;
   const auto ka2 = (double)(ka * ka);
 
-  const auto lambda = std::sqrt(-en * (2.0 + en * alpha2));
+  const auto lambda = std::sqrt(-en * (2.0 * m_MU + en * alpha2));
   const auto zeta = -v[pinf] * r[pinf];
   const auto zeta2 = zeta * zeta;
-  const auto sigma = (1.0 + en * alpha2) * (zeta / lambda);
-  const auto Ren = en + c2; // total relativistic energy
+  const auto sigma = (1.0 * m_MU + en * alpha2) * (zeta / lambda);
+  const auto Ren = en + m_MU * c2; // total relativistic energy
 
   // Generates the expansion coeficients for asymptotic wf up to order nx
   std::array<double, Param::nx> bx;
@@ -511,7 +512,7 @@ void inwardAM(std::vector<double> &f, std::vector<double> &g,
   }
 
   // Generates last `AMO' points for P and Q [actually AMO+1?]
-  const double f1 = std::sqrt(1.0 + en * alpha2 * 0.5);
+  const double f1 = std::sqrt(1.0 * m_MU + en * alpha2 * 0.5);
   const double f2 = std::sqrt(-en * 0.5) * alpha;
   for (int i = pinf; i >= (pinf - Param::AMO); i--) {
     const double rfac = std::pow(r[i], sigma) * std::exp(-lambda * r[i]);
@@ -602,7 +603,8 @@ double DiracMatrix::a(std::size_t i) const {
   return (double(-k)) * pgr->drduor[i] + alpha * h_mag * pgr->drdu[i];
 }
 double DiracMatrix::b(std::size_t i) const {
-  return (alpha * en + 2.0 * cc - alpha * (*v)[i]) * pgr->drdu[i];
+  double m = 206.7682830;
+  return (alpha * en + 2.0 * cc * m - alpha * (*v)[i]) * pgr->drdu[i];
 }
 double DiracMatrix::c(std::size_t i) const {
   return alpha * ((*v)[i] - en) * pgr->drdu[i];
