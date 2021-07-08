@@ -489,7 +489,7 @@ void inwardAM(std::vector<double> &f, std::vector<double> &g,
   const auto ka2 = (double)(ka * ka);
 
   const auto lambda = std::sqrt(-en * (2.0 + en * alpha2));
-  const auto zeta = Hd.VxFa ? Hd.zion : -v[pinf] * r[pinf]; // XXX ?
+  const auto zeta = /*Hd.VxFa ? Hd.zion : */ -v[pinf] * r[pinf]; // XXX ?
   const auto zeta2 = zeta * zeta;
   const auto sigma = (1.0 + en * alpha2) * (zeta / lambda);
   const auto Ren = en + c2; // total relativistic energy
@@ -571,11 +571,11 @@ void adamsMoulton(std::vector<double> &f, std::vector<double> &g,
     if (Hd.VxFa) {
       // XXX nb: issue is that 'f' is not normalised, but VxFa is!
       const auto dr = Hd.pgr->drdu[ri - inc] * a0;
-      const auto Xscale = (Hd.Fa0->f[ri - inc] != 0.0)
-                              ? f[ri - inc] / Hd.Fa0->f[ri - inc]
-                              : 0.0;
-      sf += -Hd.alpha * Xscale * Hd.VxFa->g[ri - inc] * dr;
-      sg += Hd.alpha * Xscale * Hd.VxFa->f[ri - inc] * dr;
+      const auto Xscalef = (Hd.Fa0->f[ri - inc] != 0.0)
+                               ? f[ri - inc] / Hd.Fa0->f[ri - inc]
+                               : 0.0;
+      sf -= Hd.alpha * Xscalef * Hd.VxFa->g[ri - inc] * dr;
+      sg += Hd.alpha * Xscalef * Hd.VxFa->f[ri - inc] * dr;
     }
 
     f[ri] = (sf - a0 * (d * sf - b * sg)) * det_inv;

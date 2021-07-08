@@ -9,6 +9,9 @@
 #include "qip/Vector.hpp"
 #include <iostream>
 #include <string>
+//
+#include "DiracODE/DiracODE.hpp"
+#include "HF/HartreeFock.hpp"
 
 void ampsci(const IO::InputBlock &input);
 int main(int argc, char *argv[]) {
@@ -432,6 +435,46 @@ void ampsci(const IO::InputBlock &input) {
     }
   }
   Module::runModules(modules, wf);
+
+  //****************************************************************************
+
+  const auto Fv = wf.valence[0];
+  auto Fa = Fv;
+
+  auto vx0 = HF::vex_approx(Fv, wf.core, 1);
+
+  auto v0 = wf.get_Vlocal();
+  auto v1 = qip::add(v0, vx0);
+
+  DiracODE::boundState(Fa, Fv.en, v1, {}, wf.alpha, 15);
+  auto F0 = Fa;
+  // std::cout << Fa.en << " " << Fa.eps << " " << Fa.its << "\n";
+  printf("%.12f, %.0e, %2i\n", Fa.en, Fa.eps, Fa.its);
+
+  auto VxFa_old = HF::vexFa(Fa, wf.core); // - 1.0 * (vx0 * Fa);
+
+  for (int i = 0; i < 300; ++i) {
+
+    auto vx0 = HF::vex_approx(Fa, wf.core);
+    auto v1 = qip::add(v0, vx0);
+    auto VxFa_new = HF::vexFa(Fa, wf.core) - (vx0 * Fa);
+    auto VxFa = VxFa_new; // 0.9 * VxFa_old + 0.1 * VxFa_new;
+    VxFa_old = VxFa;
+    auto Fa0 = Fa;
+    double en0 = Fa.en;
+    DiracODE::boundState(Fa, Fa.en, v1, {}, wf.alpha, 15, &VxFa, &Fa0, 1);
+    double en1 = Fa.en;
+    printf("%3i, %.12f, %.0e, %2i, %.2e\n", i, Fa.en, Fa.eps, Fa.its,
+           en0 - en1);
+    // std::cout << i << " " << Fa.en << " " << Fa.eps << " " << Fa.its << " "
+    //           << en0 - en1 << "\n";
+  }
+  // std::cout << Fa.en << " " << Fa.eps << " " << Fa.its << "\n";
+  printf("%.12f, %.0e, %2i\n", Fa.en, Fa.eps, Fa.its);
+  printf("%.12f, %.12f, %.3e\n", Fa.en, Fv.en, Fa.en - Fv.en);
+  printf("%.12f, %.0e, %2i\n", F0.en, F0.eps, F0.its);
+
+  // std::cout << Fa.en << " " << Fv.en << " " << Fa.en - Fv.en << "\n";
 }
 
 //******************************************************************************
