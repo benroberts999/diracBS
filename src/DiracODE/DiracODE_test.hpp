@@ -222,8 +222,8 @@ bool DiracODE(std::ostream &obuff) {
       DiracODE::boundState(Fap1, en_guess_p1, v_tot, {}, PhysConst::alpha, 15);
 
       const auto dvFa = vp * Fa; // "non-local"
-      DiracODE::boundState(Fb, Fa.en, v_nuc, {}, PhysConst::alpha, 15);
-      // Obvs will fail
+      DiracODE::boundState(Fb, Fa.en, v_nuc, {}, PhysConst::alpha, 15, &dvFa,
+                           &Fa, 1);
 
       const auto eps_norm = std::abs(Fb * Fb - 1.0); //<b|b> - norm
 
